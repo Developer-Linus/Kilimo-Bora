@@ -1,3 +1,3 @@
 ﻿# Kilimo-Bora
-##Project Overview
+## Project Overview
 **Kilimo bora** is a web-based application meant to assist farmers in getting useful tips for sustainable farming from their fellow farmers in Kenya. Hunger is one of the challenges facing Kenya population where in some places, people and children are malnourished or die due to effects of hunger. This is humiliating and we need to have best farming practices that guarantee high-crop yields based on what farmers has been practicing. Farmers have the first-hand experience in their farms and they understand what has been working well and we need to give them a platform where they can share their farming tips with other farmers. This is where the idea of this project was born.
