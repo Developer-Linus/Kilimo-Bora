@@ -25,7 +25,7 @@ exports.registerUser = async(req, res)=>{
             return res.status(400).json({message: 'User already exists'});
         }
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 15);
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         // Insert the user into the database
         await db.execute('INSERT INTO users(first_name, last_name, email, password_hash) VALUES(?, ?, ?, ?)', [firstName, lastName, email, hashedPassword]);
@@ -86,4 +86,47 @@ exports.loginUser = async(req, res)=>{
         res.status(500).json({message: 'Error occured while processing your request.'});
     }
 }
+
+// Retrieve tips
+exports.getTips = async (req, res) => {
+    try{
+        // Fetch all tips
+        const [tips] = await db.execute(`
+            SELECT t.tip_id, t.title, t.content, u.first_name AS author
+            FROM tips t
+            JOIN users u
+            ON t.user_id = u.user_id
+            `);
+        
+        // Respond with tips
+        res.status(200).json({ tips });
+    } catch(error){
+        console.error('Error fetching tips:', error);
+        res.status(500).json({ message: 'Server error while fetching tips.'});
+    }
+}
+
+// Retrieve comments for specific tip
+exports.getComments = async (req, res) =>{
+
+    const { tipId } = req.params;
+
+    try{
+        // Fetch comments for the given tip
+        const [ comments ] = await db.execute(`
+            SELECT c.comment_id, c.comment, u.first_name AS author
+            FROM comments c
+            JOIN users u ON c.user_id = u.user_id
+            WHERE c.tip_id = ?
+            `, [tipId]);
+
+        // Respond with comments
+        res.status(200).json({ comments });
+    } catch(error){
+        console.error('Error fetching comments:', error);
+        res.status(500).json({message: 'Server error while fetching comments.'});
+    }
+};
+
+
 

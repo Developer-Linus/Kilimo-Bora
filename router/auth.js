@@ -2,6 +2,7 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 const router = express.Router();
+const authenticateJWT = require('../JWTMiddleware/authenticateJWT');
 const { body } = require('express-validator');
 
 // route for user registration
@@ -22,13 +23,11 @@ router.post('/POST/login', [
     body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters long.').trim().escape()
 ], authController.loginUser);
 
+// Retrieve all tips
+router.get('/GET/tips', authController.getTips);
 
-
-
-
-
-
-
+// Retrieve comments for a specific tip
+router.get('/GET/tips/:tipId/comments', authController.getComments);
 
 
 
