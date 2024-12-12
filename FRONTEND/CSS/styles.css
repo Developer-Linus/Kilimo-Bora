@@ -1,0 +1,249 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('../Assets/images/im.jpeg') no-repeat center center/cover;
+    color: #333;
+    background-attachment: fixed; /* Keeps the image in place when scrolling */
+}
+
+/* Link Styles */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header Styles */
+header {
+    color:  rgba(255, 255, 255, 0.9);
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+    border-bottom: 2px solid #4CAF50;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+nav a {
+    margin: 0 10px;
+    color: white;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color:  rgba(255, 255, 255, 0.9);;
+    color: green;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar-header h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.sidebar-nav ul {
+    list-style-type: none;
+}
+
+.sidebar-nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav ul li a {
+    color: lightseagreen;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.sidebar-nav ul li a:hover {
+    color: #3498db;
+}
+
+.sidebar-nav ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.sidebar-footer .phone-number {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Main content styles */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/*   background: rgba(255, 255, 255, 0.9); /* Semi-transparent white for readability */
+/*border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+/* Header styles */
+header {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1px 1px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    z-index: 1000;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.5em;
+    color: #2c3e50;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #3498db;
+}
+/* Main sections styles */
+section {
+    width: 90%;
+    margin: 24px auto;
+}
+
+section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+/* Hero section */
+.hero {
+    background-image: url('https://example.com/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #2980b9;
+}
+/* Form Styles */
+form {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

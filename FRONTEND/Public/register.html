@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+   
+        <!-- Registration Section -->
+        <section id="register" class="register">
+            <h2>Register for sustainable farming tips</h2>
+
+            <form action="#" method="POST" class="register-form" onsubmit="return validateRegisterForm()";>
+                <div class="form-group">
+                    <label for="first name">Fisrt name:</label>
+                    <input type="text" id="first-name" name="first-name" placeholder="Enter your first name">
+                    <span id="nameError" class="error"></span><br><br>
+                </div>
+                <div class="form-group">
+                    <label for=" last name"> Last name:</label>
+                    <input type="text" id="last-name" name="last-name" placeholder="Enter your last name">
+                    <span id="nameError" class="error"></span><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                    <span id="emailError" class="error"></span><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password">
+                    <span id="passwordError" class="error"></span><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password">
+                    <span id="confirm-passwordError" class="error"></span><br><br>
+                </div>
+                 <div class="form-group">
+                     <label for="terms">I agree to the terms and conditions</label>
+                      <input type="checkbox" id="terms">
+                       <span id="termsError" class="error"></span><br><br>
+                    </div>
+
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#login">Login here</a>.</p>
+       </section>
+       
+    <script src="../JS/scripts.js"></script>
+</body>
+</html>
+
