@@ -6,50 +6,50 @@
     <title>Register</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
-   
-        <!-- Registration Section -->
-        <section id="register" class="register">
-            <h2>Register for sustainable farming tips</h2>
-
-            <form action="#" method="POST" class="register-form" onsubmit="return validateRegisterForm()";>
-                <div class="form-group">
-                    <label for="first name">Fisrt name:</label>
-                    <input type="text" id="first-name" name="first-name" placeholder="Enter your first name">
-                    <span id="nameError" class="error"></span><br><br>
-                </div>
-                <div class="form-group">
-                    <label for=" last name"> Last name:</label>
-                    <input type="text" id="last-name" name="last-name" placeholder="Enter your last name">
-                    <span id="nameError" class="error"></span><br><br>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email">
-                    <span id="emailError" class="error"></span><br><br>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="Create a password">
-                    <span id="passwordError" class="error"></span><br><br>
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password">
-                    <span id="confirm-passwordError" class="error"></span><br><br>
-                </div>
-                 <div class="form-group">
-                     <label for="terms">I agree to the terms and conditions</label>
-                      <input type="checkbox" id="terms">
-                       <span id="termsError" class="error"></span><br><br>
+<body class = "register-main">
+    
+    <!-- Registration Section -->
+         <div class = "form-section">
+            <section id="register" class="register">
+                <h2>Register</h2>
+                <form class="register-form" onsubmit = "return validateRegisterForm()">
+                    <div class="form-group">
+                        <label for="regFirstName">First Name:</label>
+                        <input type="text" id="regFirstName" name="regFirstName" placeholder="Enter your first name">
+                        <span id="firstNameError" class="error"></span>
                     </div>
-
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <a href="#login">Login here</a>.</p>
-       </section>
-       
-    <script src="../JS/scripts.js"></script>
+                    <div class="form-group">
+                        <label for="regLastName"> Last Name:</label>
+                        <input type="text" id="regLastName" name="regLastName" placeholder="Enter your last name">
+                        <span id="lastNameError" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email:</label>
+                        <input type="email" id="regEmail" name="regEmail" placeholder="Enter your email">
+                        <span id="emailError" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password:</label>
+                        <input type="password" id="regPassword" name="regPassword" placeholder="Create a password">
+                        <span id="passwordError" class="error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password:</label>
+                        <input type="password" id="regConfirmPassword" name="regConfirmPassword" placeholder="Confirm your password">
+                        <span id="confirmPasswordError" class="error"></span>
+                    </div>
+                     <div class="form-group checkbox-container">
+                        <input type="checkbox" id="terms"> 
+                        <label for="terms">I agree to the terms and conditions</label>
+                           <span id="termsError" class="error"></span>
+                        </div>
+    
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="./login.html">Login here</a>.</p>
+           </section>
+         </div>
+    <script src="../js/scripts.js"></script>
 </body>
 </html>
 

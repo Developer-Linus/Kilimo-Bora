@@ -6,23 +6,26 @@
     <title>Login</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
-  <div class = "login-main"><!--login form-->
-    <h2>Login to sustainable farming tips</h2>
-    <form id="loginForm" onsubmit="return scripts ()">
-        <div class="form-group"
+<body class = "login-main">
+  
+  <!--login form-->
+  <div class = "form-section">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return validateLoginForm()">
+    <div class="form-group">
       <label for="loginEmail">Email:</label>
-      <input type="email" id="loginEmail" >
-      <span id="loginEmailError" class="error"></span><br><br>
+      <input type="email" id="loginEmail" placeholder = "Enter registered email">
+      <span id="loginEmailError" class="error"></span>
     </div>
     
       <div class="form-group">
       <label for="loginPassword">Password:</label>
-      <input type="password" id="loginPassword">
-      <span id="loginPasswordError" class="error"></span><br><br>
+      <input type="password" id="loginPassword" placeholder = "Enter your password.">
+      <span id="loginPasswordError" class="error"></span>
     </div>
     
       <button type="submit">Login</button>
+      No account? <a href="./register.html">Register Here</a>
     </form>
   </div>
     <script src="../js/scripts.js"></script>

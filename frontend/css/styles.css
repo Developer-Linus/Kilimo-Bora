@@ -183,6 +183,8 @@ section h2 {
     font-size: 1.8em;
     margin-bottom: 12px;
     color: #fff;
+    line-height: 2.5rem;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .cta-button {
@@ -198,43 +200,6 @@ section h2 {
 .cta-button:hover {
     background-color: rgb(17, 119, 17);
 }
-/* Form Styles */
-form {
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-    padding: 20px;
-    border: 1px solid #ccc;
-    max-width: 400px;
-    margin: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-form label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-form input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-form button:hover {
-    background-color: #45a049;
-}
 
 /* Footer Styles */
 footer {
@@ -248,7 +213,7 @@ footer {
 }
 #mission, #community, #get-started{
     width: 90%;
-    background: rgba(0, 128, 128, 0.7);;
+    background: rgba(0, 128, 128, 0.5);;
     border: 1px solid #45a049;
     border-radius: 1.5rem;
     padding: 2rem;
@@ -318,11 +283,101 @@ footer {
     color: #45a049; /* Matches the accent color */
     margin-bottom: 10px; /* Adds spacing below the icon */
 }
-.login-main{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../assets/images/Agriculture\ Farm\ Pictures\ _\ Freepik\ \(1\).jpeg');
+body.login-main{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../assets/images/happywfarmerr.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed; /*
+    background-attachment: fixed;
+}
+body.register-main{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../assets/images/happymanfarmer.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
 }
 
+.form-section {
+    background: rgba(0, 128, 128, 0.8);
+    padding: 30px; /* Add spacing inside the container */
+    margin: 4rem auto; /* Center the container and add vertical spacing */
+    max-width: 400px; /* Restrict width for better readability */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Style for the form elements */
+.form-section form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 15px; /* Add space between form elements */
+}
+/* Style for input fields */
+.form-section input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Rounded input fields */
+    font-size: 16px; /* Increase text size for readability */
+    background: #f9f9f9; /* Subtle background for inputs */
+    transition: border-color 0.3s; /* Smooth effect for focus state */
+}
+
+/* Input focus effect */
+.form-section input:focus {
+    outline: none;
+    border-color: #008caf; /* Highlight border color on focus */
+    box-shadow: 0 0 5px rgba(0, 140, 175, 0.5); /* Subtle glow effect */
+}
+/* Style for the submit button */
+.form-section button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 1rem; /* Rounded button */
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    background: #4CAF50; /* Button color */
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s; /* Smooth hover effect */
+}
+
+/* Button hover effect */
+.form-section button:hover {
+    background: #45a049; 
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Add a title style */
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+.form-section label{
+    display: block;
+}
+
+/* Container for alignment */
+.checkbox-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align items */
+}
+
+/* Style for the checkbox */
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Add space between the checkbox and the label */
+}
+
+/* Style for the label */
+.checkbox-container label {
+    font-size: 14px; /* Adjust font size for readability */
+    color: #333; /* Text color */
+    cursor: pointer; /* Makes the label clickable */
+}
+.error{
+    color: red;
+}
