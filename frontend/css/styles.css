@@ -1,0 +1,328 @@
+/* General Styles */
+html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    scroll-behavior: smooth;
+}
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Link Styles */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color:  rgba(255, 255, 255, 0.9);;
+    color: green;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar-header h2 {
+    margin-top: 8rem;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.sidebar-nav ul {
+    list-style-type: none;
+}
+
+.sidebar-nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav ul li a {
+    color: lightseagreen;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.sidebar-nav ul li a:hover {
+    color: #3498db;
+}
+
+.sidebar-nav ul li a i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.sidebar-footer .phone-number {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column; /* Arrange child elements vertically */
+    min-height: 100vh; /* Ensure the wrapper fills the full viewport height */
+}
+
+/* Main content styles */
+.main-content {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../assets/images/happyfarmer.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; /* Keeps the image in place when scrolling */
+    flex: 1;
+    margin-top: 150px;
+    margin-left: 280px;
+    margin-right: 12px;
+    padding: 20px;
+}
+/* Header styles */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    width: 150px;
+    object-fit: contain;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #3498db;
+}
+/* Main sections styles */
+section {
+    width: 90%;
+    margin: 24px auto;
+}
+
+section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+/* Hero section */
+.hero {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-content h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.hero-content p {
+    font-size: 1.8em;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(65, 136, 65);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: rgb(17, 119, 17);
+}
+/* Form Styles */
+form {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+#mission, #community, #get-started{
+    width: 90%;
+    background: rgba(0, 128, 128, 0.7);;
+    border: 1px solid #45a049;
+    border-radius: 1.5rem;
+    padding: 2rem;
+}
+#mission p, #community p, #get-started p{
+    line-height: 2rem;
+    color:#fff;
+}
+/* Styling features section*/
+#features {
+    display: flex; /* Makes this a flex container */
+    flex-direction: column; /* Ensures elements stack vertically */
+    align-items: center; /* Centers content horizontally */
+    padding: 4px;
+    width: 90%;
+    background-color: rgba(0, 128, 128, 0.7); /* Transparent teal background */
+    border: 1px solid #45a049; /* Green border for accent */
+    border-radius: 1.5rem; /* Matches the mission styling */
+}
+
+/* Style for the heading */
+#features h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* Styling the unordered list */
+#features ul {
+    display: flex; /* Makes the list a flex container */
+    flex-wrap: wrap; /* Allows items to wrap if needed */
+    justify-content: center; /* Centers items in the list */
+    list-style-type: none; /* Removes default bullet points */
+    padding: 0;
+    gap: 2rem; /* Adds spacing between items */
+}
+
+/* Styling list items */
+#features li {
+    background-color: #ffffff; /* White background for contrast */
+    border: 1px solid #45a049; /* Matches mission border color */
+    border-radius: 5px; /* Smooth corners */
+    padding: 16px 20px;
+    flex: 1 1 calc(33.333% - 30px); /* Responsive width with spacing */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Centers text inside each item */
+    max-width: 300px; /* Optional: limits size of each item */
+    line-height: 1.5rem;
+    border-radius: 1.5rem;
+}
+
+/* Text styling inside list items */
+#features li strong {
+    color: #45a049;
+    display: block;
+    margin-bottom: 8px; 
+    font-size: 1.2rem;/* Adds spacing below strong text */
+}
+
+#features li:hover {
+    background-color: rgba(0, 128, 128, 0.9); /* Slightly darker teal on hover */
+    transform: scale(1.05); /* Grows slightly on hover */
+    transition: 0.3s; /* Smooth hover effect */
+    color: #fff;
+}
+#features li i {
+    font-size: 2rem; /* Controls the size of the icon */
+    color: #45a049; /* Matches the accent color */
+    margin-bottom: 10px; /* Adds spacing below the icon */
+}
+.login-main{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../assets/images/Agriculture\ Farm\ Pictures\ _\ Freepik\ \(1\).jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; /*
+}
+
