@@ -19,9 +19,9 @@ exports.registerUser = async(req, res)=>{
         const { firstName, lastName, email, password } = req.body;
 
         // Check if the user already exists
-        const [existingUser ] = await db.execute('SELECT * FROM users WHERE email=?', [email]);
+        const [ existingUser ] = await db.execute('SELECT * FROM users WHERE email=?', [email]);
 
-        if(existingUser.length>0){
+        if(existingUser.length > 0){
             return res.status(400).json({message: 'User already exists'});
         }
         // Hash the password

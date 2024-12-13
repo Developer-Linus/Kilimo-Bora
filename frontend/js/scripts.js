@@ -1,3 +1,5 @@
+// Section for registration and login frontend form validation
+// Registration form validation
 function validateRegisterForm(event) {
     let isValid = true;
 
@@ -104,3 +106,68 @@ function validateLoginForm() {
 
     return valid;
 }
+
+
+// Section for frontend and backend connection
+const messageDiv = document.getElementById('message');
+const registerForm = document.getElementById('register-form');
+
+// Function for displaying the message when user submits a form
+function showMessage(type, text) {
+    messageDiv.style.display = 'block';
+    if (type == 'success') {
+        messageDiv.style.color = 'green';
+    } else {
+        messageDiv.style.color = 'red';
+    }
+    
+    messageDiv.textContent = text; // Display the actual message text
+
+    // Use setTimeout to hide the message after 3 seconds
+    setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 4000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Farmer Registration
+registerForm?.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent form submission default behaviour
+
+    // Get registration form input values
+    const firstName = document.getElementById('regFirstName').value;
+    const lastName = document.getElementById('regLastName').value;
+    const email = document.getElementById('regEmail').value;
+    const password = document.getElementById('regPassword').value;
+
+    // Send a POST request to the server to register the user
+    const response = await fetch('/auth/POST/register', {
+        method: 'POST', // Use POST for user registration
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+
+        // Prepare form data as JSON to be sent to backend
+        body: JSON.stringify({ 
+            firstName,
+            lastName,
+            email,
+            password
+        })
+    });
+
+    // Parse the response from the server
+    const result = await response.json();
+
+    // Handle the response based on status code
+    if(response.status === 201){
+        // Successful registration
+        showMessage('success', result.message);
+        registerForm.reset();
+    }else{
+        // Failed registration
+        showMessage('Failed', result.message);
+    }
+})
+})

@@ -1,6 +1,7 @@
 // Import the necessary packages
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -25,6 +26,9 @@ app.use(express.urlencoded({extended: true}));
 
 // Use or mount authentication routes
 app.use('/auth', authRoutes);
+
+// Serve static files from the 'frontend' directory
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // Start the server
 app.listen(port, ()=>{
