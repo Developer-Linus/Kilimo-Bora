@@ -33,6 +33,7 @@ a:hover {
 
 /* Sidebar styles */
 .sidebar {
+    margin-top: 7.5rem;
     width: 250px;
     height: 100vh;
     background-color: rgba(218, 196, 172, 0.75);
@@ -45,7 +46,7 @@ a:hover {
 }
 
 .sidebar-header h2 {
-    margin-top: 8rem;
+    margin-top: 1.5rem;
     margin-bottom: 20px;
     font-size: 1.5em;
 }
@@ -81,7 +82,7 @@ a:hover {
 }
 
 .sidebar-footer .phone-number {
-    color: #3498db;
+    color: #4F1E0F;
     font-weight: bold;
     text-decoration: none;
 }
