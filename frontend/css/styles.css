@@ -220,14 +220,14 @@ footer {
     bottom: 0;
     width: 100%;
 }
-#mission, #community, #get-started{
+#mission, #about, #get-started{
     width: 90%;
     background: rgba(190, 192, 93, 0.50);
     border: 1px solid #45a049;
     border-radius: 1.5rem;
     padding: 2rem;
 }
-#mission p, #community p, #get-started p{
+#mission p, #about p, #get-started p{
     line-height: 2rem;
     color:#fff;
 }
@@ -235,7 +235,7 @@ footer {
     color: #4F1E0F;
 }
 /* Styling features section*/
-#features {
+#features, #services {
     display: flex; /* Makes this a flex container */
     flex-direction: column; /* Ensures elements stack vertically */
     align-items: center; /* Centers content horizontally */
@@ -247,13 +247,13 @@ footer {
 }
 
 /* Style for the heading */
-#features h2 {
+#features h2, #services h2 {
     font-size: 2rem;
     margin-bottom: 15px;
 }
 
 /* Styling the unordered list */
-#features ul {
+#features ul, #services ul {
     display: flex; /* Makes the list a flex container */
     flex-wrap: wrap; /* Allows items to wrap if needed */
     justify-content: center; /* Centers items in the list */
@@ -263,7 +263,7 @@ footer {
 }
 
 /* Styling list items */
-#features li {
+#features li, #services li {
     background-color: #ffffff; /* White background for contrast */
     border: 1px solid #45a049; /* Matches mission border color */
     border-radius: 5px; /* Smooth corners */
@@ -277,20 +277,20 @@ footer {
 }
 
 /* Text styling inside list items */
-#features li strong {
+#features li strong, #services li strong {
     color: #45a049;
     display: block;
     margin-bottom: 8px; 
     font-size: 1.2rem;/* Adds spacing below strong text */
 }
 
-#features li:hover {
+#features li:hover, #services li:hover {
     background-color: #FCF8B9;
     transform: scale(1.05); /* Grows slightly on hover */
     transition: 0.3s; /* Smooth hover effect */
     color: #4F1E0F;
 }
-#features li i {
+#features li i, #services li i {
     font-size: 2rem; /* Controls the size of the icon */
     color: #45a049; /* Matches the accent color */
     margin-bottom: 10px; /* Adds spacing below the icon */
