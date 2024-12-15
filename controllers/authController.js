@@ -86,6 +86,28 @@ exports.loginUser = async(req, res)=>{
         res.status(500).json({message: 'Error occured while processing your request.'});
     }
 }
+// Add Contact Us message
+exports.addContactMessage = async (req, res) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ error: errors.array() });
+        }
+
+        const { name, email, message } = req.body;
+
+        // Insert message into the contactus table
+        await db.execute(
+            'INSERT INTO contactus (name, email, message, status) VALUES (?, ?, ?, ?)',
+            [name, email, message, 'pending']
+        );
+
+        res.status(201).json({ message: 'Message successfully sent.' });
+    } catch (error) {
+        console.error('Error adding contact message:', error);
+        res.status(500).json({ message: 'Server error while adding contact message.' });
+    }
+}
 
 // Retrieve tips
 exports.getTips = async (req, res) => {

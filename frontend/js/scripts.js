@@ -111,6 +111,8 @@ function validateLoginForm() {
 // Section for frontend and backend connection
 const messageDiv = document.getElementById('message');
 const registerForm = document.getElementById('register-form');
+const loginForm = document.getElementById('login-form');
+const contactForm = document.getElementById('message-form');
 
 // Function for displaying the message when user submits a form
 function showMessage(type, text) {
@@ -167,7 +169,77 @@ registerForm?.addEventListener('submit', async (event) => {
         registerForm.reset();
     }else{
         // Failed registration
-        showMessage('Failed', result.message);
+        showMessage('error', result.message);
     }
 })
+// User login
+loginForm?.addEventListener('submit', async (event)=>{
+    event.preventDefault();
+
+    // Get login input values
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    // Send a POST request to the server to register the user
+    const response = await fetch('/auth/POST/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        
+        body: JSON.stringify({ 
+            email,
+            password
+        })
+    });
+    // Parse the response from the server
+    const result = await response.json();
+
+    // Handle response based on status code
+    if(response.status === 200){
+        // Successful login
+        showMessage('success', result.message);
+        loginForm.reset();
+        window.location.href = '../public/dashboard.html';
+    } else {
+        // Failed login
+        showMessage('error', result.message);
+    }
+})
+
+// Add contact us message
+contactForm?.addEventListener('submit', async(event) => {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+// Get contact us input values
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    
+// Send a POST request to the server to record the message
+        const response = await fetch('/auth/POST/contactus', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, message })
+        });
+        // Parse the response from the server
+        const result = await response.json();
+
+        // Handle response based on status code
+        if (response.status === 201) {
+            // Successful record of contact us message
+            showMessage('success', result.message);
+            contactForm.reset(); // Reset the form fields
+        } else {
+           // Unsuccessful record of contact us message
+           showMessage('error', result.message);
+        }
+});
+
+
+
+
+
 })

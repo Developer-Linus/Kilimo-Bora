@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&family=Dancing+Script:wght@400..700&family=Delius&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class = "dashboard">
+     <!-- Header Section -->
+     <header>
+        <nav>
+            <div class="logo">
+                <a href="./index.html"><img src="../assets/images/logo.svg" alt="Kilimo Bora logo" /></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="./public/login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class = "sidebar-header">
+            <h2>Dashboard</h2>
+        </div>
+        <nav class = "sidebar-nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#settings">Tips</a></li>
+                <li><a href="#logout">Professional Advice</a></li>
+                <li><a href="MarketPlace">MarketPlace</a></li>
+                <li><a href="#settings">Inventory</a></li>
+                <li><a href="#settings">AI Assistant</a></li>
+                <li><a href="#settings">Favourite Tips</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Welcome message -->
+        <div class="welcome-message">
+            <h1>Welcome, <span id = "user-name"></span>!</h1>
+            <p>Welcome back to your dashboard. Here's what you can do on the platform.</p>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="cards">
+            <div class="card">
+                <i class="fa fa-user"></i>
+                <h3>Profile</h3>
+                <p>View and edit your profile information</p>
+                <a href="#profile" class="btn">Go to Profile</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-lightbulb"></i>
+                <h3>Tips</h3>
+                <p>Get Farming Tips to Improve Your Farming.</p>
+                <a href="#appointments" class="btn">Get Tips</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-comments"></i>
+                <h3>Professional Advice</h3>
+                <p>Connect with certified farming professionals for one-on-one tips.</p>
+                <a href="#settings" class="btn">Get In Touch</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-briefcase"></i>
+                <h3>MarketPlace</h3>
+                <p>Connect with Buyers.</p>
+                <a href="#messages" class="btn">Find Buyers</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-cogs"></i>
+                <h3>Inventory</h3>
+                <p>Keep Record of all your farming tools and equipment and resources.</p>
+                <a href="#settings" class="btn">Take Your Inventory</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-robot"></i>
+                <h3>AI Assistant</h3>
+                <p>Utilize AI technology to make your informed farming decisions.</p>
+                <a href="#settings" class="btn">Chat</a>
+            </div>
+            <div class="card">
+                <i class="fa fa-star"></i>
+                <h3>Favourite Tips</h3>
+                <p>Counter</p>
+                <p>Keep tips you love and download them later.</p>
+                <a href="#settings" class="btn">Download</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -23,6 +23,10 @@ router.post('/POST/login', [
     body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters long.').trim().escape()
 ], authController.loginUser);
 
+// Add contact us message
+router.post('/POST/contactus', authController.addContactMessage);
+
+
 // Retrieve all tips
 router.get('/GET/tips', authController.getTips);
 

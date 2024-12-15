@@ -398,4 +398,153 @@ body.register-main{
 }
 #message{
     margin-top: 3rem;
+    background-color: #FCF8B9;
+    text-align: center;
+}
+/* Contact Us Section */
+#contact {
+    width: 90%;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: rgba(190, 192, 93, 0.70); /* Match with the rest of the design */
+    border: 1px solid #45a049;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+#contact h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#contact p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto; /* Center the form */
+}
+
+.contact-form label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    border-color: #008caf;
+    box-shadow: 0 0 5px rgba(0, 140, 175, 0.5);
+    outline: none;
+}
+
+.contact-form button {
+    padding: 10px 15px;
+    background-color: #607938;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.contact-form button:hover {
+    background-color: #4F1E0F;
+    transform: translateY(-2px);
+}
+
+/* Dashboard Styling */
+
+.welcome-message {
+    margin-bottom: 40px;
+}
+
+.welcome-message h1 {
+    font-size: 4rem;
+    font-family: "Delius", cursive;
+    font-weight: 700;
+    font-style: normal;
+    color: #fff;
+    text-align: center;
+    
+}
+
+.welcome-message p {
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+/* Grid layout for cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: rgba(245, 245, 245, 0.75)
+    ;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    font-size: 2rem;
+    font-family: "Delius", cursive;
+    font-weight: 650;
+    font-style: normal;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.card .btn {
+    text-decoration: none;
+    color: white;
+    background-color: #008caf;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.card i{
+    font-size: 40px;
+}
+
+.card .btn:hover {
+    background-color: #005f7f;
 }
