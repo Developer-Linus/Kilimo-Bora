@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Profile Management Container -->
+    <div id = "profile-section" class="profile-container">
+        <h1>Your Profile</h1>
+        
+        <!-- User Information Section -->
+        <div class="profile-details" id="user-section">
+            <!-- Profile Picture -->
+            <div class="profile-picture">
+                <img id="displayProfilePicture" src="" alt="Profile Picture">
+            </div>
+            
+            <p><strong>First Name:</strong> <span id="profileFirstName"></span></p>
+            <p><strong>Last Name:</strong> <span id="profileLastName"></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2>Update Your Profile</h2>
+            <form id="editProfileForm">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="editFirstName">First Name</label>
+                    <input type="text" id="editFirstName" name="editFirstName" placeholder="Enter your first name" required>
+                </div>
+    
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="editLastName">Last Name</label>
+                    <input type="text" id="editLastName" name="editLastName" placeholder="Enter your last name" required>
+                </div>
+    
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" name="editEmail" placeholder="Enter your email address" required>
+                </div>
+
+                <!-- Profile Picture Upload -->
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture</label>
+                    <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                </div>
+    
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" id="saveProfileBtn" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Logout Button -->
+        <button type="button" id="logoutBtn" class="btn-secondary" aria-label="Logout from your profile">Logout</button>
+    </div>
+
+    <script src="../js/scripts.js"></script>
+</body>
+</html>

@@ -23,6 +23,9 @@ router.post('/POST/login', [
     body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters long.').trim().escape()
 ], authController.loginUser);
 
+// View profile route
+router.get('/GET/profile', authenticateJWT, authController.viewProfile);
+
 // Add contact us message
 router.post('/POST/contactus', authController.addContactMessage);
 

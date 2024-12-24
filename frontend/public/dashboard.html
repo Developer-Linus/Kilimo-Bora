@@ -51,51 +51,121 @@
         </div>
 
         <!-- Dashboard Cards -->
-        <div class="cards">
+        <div class="cards" id = "dashboard-cards">
             <div class="card">
                 <i class="fa fa-user"></i>
                 <h3>Profile</h3>
                 <p>View and edit your profile information</p>
-                <a href="#profile" class="btn">Go to Profile</a>
+                <button class="btn" id="profile-btn" onclick="window.location.href='#profile-section'">Go to Profile</button>
             </div>
             <div class="card">
                 <i class="fa fa-lightbulb"></i>
                 <h3>Tips</h3>
                 <p>Get Farming Tips to Improve Your Farming.</p>
-                <a href="#appointments" class="btn">Get Tips</a>
+                <button class="btn" id = "get-tips-btn" onclick="window.location.href='#tips-section';">Get Tips</button>
             </div>
             <div class="card">
                 <i class="fa fa-comments"></i>
                 <h3>Professional Advice</h3>
                 <p>Connect with certified farming professionals for one-on-one tips.</p>
-                <a href="#settings" class="btn">Get In Touch</a>
+                <button class="btn" onclick="window.location.href='#settings';">Get In Touch</button>
             </div>
             <div class="card">
                 <i class="fa fa-briefcase"></i>
                 <h3>MarketPlace</h3>
                 <p>Connect with Buyers.</p>
-                <a href="#messages" class="btn">Find Buyers</a>
+                <button class="btn" onclick="window.location.href='#messages';">Find Buyers</button>
             </div>
             <div class="card">
                 <i class="fa fa-cogs"></i>
                 <h3>Inventory</h3>
                 <p>Keep Record of all your farming tools and equipment and resources.</p>
-                <a href="#settings" class="btn">Take Your Inventory</a>
+                <button class="btn" onclick="window.location.href='#settings';">Take Your Inventory</button>
             </div>
             <div class="card">
                 <i class="fa fa-robot"></i>
                 <h3>AI Assistant</h3>
                 <p>Utilize AI technology to make your informed farming decisions.</p>
-                <a href="#settings" class="btn">Chat</a>
+                <button class="btn" onclick="window.location.href='#settings';">Chat</button>
             </div>
             <div class="card">
                 <i class="fa fa-star"></i>
                 <h3>Favourite Tips</h3>
                 <p>Counter</p>
                 <p>Keep tips you love and download them later.</p>
-                <a href="#settings" class="btn">Download</a>
+                <button class="btn" onclick="window.location.href='#settings';">Download</button>
             </div>
         </div>
     </div>
+
+    <!--Profile Section-->
+
+    <div class ="profile-container" id = "profile-section" style = "display: none;">
+        <h1>Your Profile</h1>
+        
+        <!-- User Information Section -->
+        <div class="profile-details" id="user-section">
+            <!-- Profile Picture -->
+            <div class="profile-picture">
+                <img id="displayProfilePicture" src="" alt="Profile Picture">
+            </div>
+            
+            <p><strong>First Name:</strong> <span id="profileFirstName"></span></p>
+            <p><strong>Last Name:</strong> <span id="profileLastName"></span></p>
+            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2>Update Your Profile</h2>
+            <form id="editProfileForm">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="editFirstName">First Name</label>
+                    <input type="text" id="editFirstName" name="editFirstName" placeholder="Enter your first name" required>
+                </div>
+    
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="editLastName">Last Name</label>
+                    <input type="text" id="editLastName" name="editLastName" placeholder="Enter your last name" required>
+                </div>
+    
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" name="editEmail" placeholder="Enter your email address" required>
+                </div>
+
+                <!-- Profile Picture Upload -->
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture</label>
+                    <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                </div>
+    
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" id="saveProfileBtn" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Logout Button -->
+        <button type="button" id="logoutBtn" class="btn-secondary" aria-label="Logout from your profile">Logout</button>
+    </div>
+
+    <!--Tips Section-->
+    <section id="tips-section" style = "display: none;">
+        <h2>Community Tips</h2>
+        <div id="tips-container"></div>
+      </section>
+      
+
+
+
+
+
+
+    <script src="../js/scripts.js"></script>
 </body>
 </html>

@@ -1,34 +1,36 @@
 // Import jsonwebtoken for token creation and verification
 const jwt = require('jsonwebtoken');
 
-// Load the environment variables from .env file such as JWT_SECRET and JWT_EXPIRY
+// Load the environment variables from .env file such as JWT_SECRET
 require('dotenv').config();
 
 // Middleware function to authenticate JWT tokens
-const authenticateJWT = (req, res, next)=>{
+const authenticateJWT = (req, res, next) => {
     // Extract the authorization header from the incoming request
     const authHeader = req.headers.authorization;
-    if(authHeader){
-        // JWT tokens are typically passed as 'Bearer <token>' so we split the string to extract the actual token
-        const token = authHeader.split(' ')[1];
 
-        // Verify the token using the secret key from the .env file
-        jwt.verify(token, process.env.JWT_SECRET, (err, user)=>{
-            if(err){
-                // If token verification fails(for example, token expired or invalid), return a 403 forbidden error
-                return res.status(403).json({message: 'Invalid or expired token'});
-            }
-            // if the token is valid, attach the decoded user information(from the token payload) to the request object
-            req.user = user;
-
-            // Call the next middleware or route handler
-            next()
-        });
-    } else{
-        // If no authorization header is provided, return a 401 unauthorized error
-        res.status(403).json({message: 'Token required for authentication.'});
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        // If no authorization header or invalid format is provided, return a 401 Unauthorized error
+        return res.status(401).json({ message: 'Authorization header is missing or improperly formatted.' });
     }
-}
 
-// Export the middleware function for use in the other parts of applcation
+    // JWT tokens are typically passed as 'Bearer <token>', so split the string to extract the actual token
+    const token = authHeader.split(' ')[1];
+
+    // Verify the token using the secret key from the .env file
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) {
+            // If token verification fails (e.g., token expired or invalid), return a 403 Forbidden error
+            return res.status(403).json({ message: 'Invalid or expired token.' });
+        }
+
+        // If the token is valid, attach the decoded user information (from the token payload) to the request object
+        req.user = user;
+
+        // Call the next middleware or route handler
+        next();
+    });
+};
+
+// Export the middleware function for use in other parts of the application
 module.exports = authenticateJWT;
