@@ -365,105 +365,149 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
     window.location.href = '../public/login.html'; // Redirect to login page
 });
 
-// Function to fetch tips
-const fetchTips = async () => {
+
+// WORKING ON IT
+let currentPage = 1; // Tracks the current page of posts for infinite scrolling.
+let isLoading = false; // Prevents multiple simultaneous fetch requests.
+
+async function fetchPosts(page = 1) {
     try {
-      const response = await fetch('/auth/GET/tips');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch tips: ${response.statusText}`);
-      }
-      const data = await response.json();
-      console.log('Fetched tips data:', data); // Log the fetched data
-      return Array.isArray(data.tips) ? data.tips : []; // Extract the tips array from the response object
-    } catch (error) {
-      console.error('Error fetching tips:', error);
-      return []; // Return an empty array if an error occurs
-    }
-  };
-  
-  // Function to fetch comments for a specific tip
-  const fetchComments = async (tipId) => {
-    try {
-      const response = await fetch(`/auth/GET/tips/${tipId}/comments`); // Dynamically insert the tipId
-      if (!response.ok) {
-        throw new Error(`Failed to fetch comments for tip ${tipId}: ${response.statusText}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error(`Error fetching comments for tip ${tipId}:`, error);
-      return []; // Return an empty array if an error occurs
-    }
-  };
-  
-  // Function to display tips
-  const displayTips = async () => {
-    if (!tipsContainer) {
-      console.error('Tips container not found');
-      return; // Exit if container is not found
-    }
-    // Hide the dashboard cards section
-    dashboardCards.style.display = 'none';
-    tipsContainer.style.display = 'block'; // Show the tips section
-    
-  
-    const tips = await fetchTips(); // Fetch tips from the API
-  
-    // Check if tips is an array before proceeding
-    if (!Array.isArray(tips)) {
-      console.error('Fetched tips data is not an array:', tips);
-      tipsContainer.innerHTML = '<p>Error loading tips. Please try again later.</p>';
-      return;
-    }
-  
-    tips.forEach(tip => {
-      const tipElement = document.createElement('div');
-      tipElement.classList.add('tip-card');
-  
-      tipElement.innerHTML = `
-        <h3>${tip.title}</h3>
-        <p>${tip.content}</p>
-        <div class="tip-footer">
-          <button class="comments-toggle" data-tip-id="${tip.tip_id}">
-            ${tip.comment_count || 0} Comments
-          </button>
-        </div>
-        <div class="comments-section" id="comments-${tip.tip_id}" style="display: none;">
-          <ul class="comments-list"></ul>
-        </div>
-      `;
-  
-      tipsContainer.appendChild(tipElement);
-    });
-  
-    // Add event listeners to comment buttons
-    const commentButtons = document.querySelectorAll('.comments-toggle');
-    commentButtons.forEach(button => {
-      button.addEventListener('click', async (event) => {
-        const tipId = event.target.dataset.tipId;
-        const commentsSection = document.getElementById(`comments-${tipId}`);
-        const commentsList = commentsSection.querySelector('.comments-list');
-  
-        if (commentsSection.style.display === 'none') {
-          const comments = await fetchComments(tipId); // Fetch comments for the tip
-          commentsList.innerHTML = comments.map(comment =>
-            `<li><strong>${comment.first_name} ${comment.last_name}:</strong> ${comment.comment}</li>`
-          ).join('');
-          commentsSection.style.display = 'block';
+        if (isLoading) return; // Prevent overlapping requests.
+        isLoading = true; // Indicate that a fetch request is ongoing.
+
+        // Fetch posts for the given page from the backend.
+        const response = await fetch(`/auth/GET/tips?page=${page}`);
+        const posts = await response.json();
+
+        // Log the response to check its structure
+        console.log('Fetched posts:', posts);
+
+        // Ensure the response contains the 'tips' array
+        if (Array.isArray(posts.tips)) {
+            renderPosts(posts.tips); // Display the fetched posts.
         } else {
-          commentsSection.style.display = 'none';
+            console.error('Expected an array but received:', posts.tips);
         }
-      });
+        isLoading = false; // Allow new requests after rendering posts.
+    } catch (error) {
+        console.error('Error fetching posts:', error); // Log fetch errors.
+        isLoading = false; // Reset loading status after error.
+    }
+}
+
+function renderPosts(posts) {
+    const postsContainer = document.getElementById('posts-container'); // Locate the container for posts.
+
+    posts.forEach(post => {
+        const postCard = document.createElement('div'); // Create a container for each post.
+        postCard.className = 'post-card'; // Add a CSS class for styling.
+
+        // Populate the card with title, content, author, comments, and likes.
+        postCard.innerHTML = `
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <p><strong>Author:</strong> ${post.author}</p>
+            <p>
+                <strong>Comments:</strong> 
+                <span id="comment-count-${post.tip_id}">${post.comments}</span> 
+                <button onclick="toggleComments(${post.tip_id})">View Comments</button>
+            </p>
+            <div id="comments-${post.tip_id}" class="comments-section" style="display: none;"></div>
+            <p>
+                <strong>Likes:</strong> 
+                <span id="like-count-${post.tip_id}">${post.likes}</span> 
+                <button onclick="likePost(${post.tip_id})">Like</button>
+            </p>
+        `;
+
+        postsContainer.appendChild(postCard); // Append the card to the container.
     });
-  };
-  
-  // Initialize getTipsBtn
-  
-  // Event listener for the "Get Tips" button
-  if (getTipsBtn) {
-    getTipsBtn.addEventListener('click', displayTips);
-  } else {
+}
+
+// Global function to toggle comments for a post
+async function toggleComments(tipId) {
+    const commentsSection = document.getElementById(`comments-${tipId}`); // Find the comments section.
+
+    if (commentsSection.style.display === 'none') {
+        try {
+            const response = await fetch(`/auth/GET/tips/${tipId}/comments`); // Fetch comments for the post.
+            const comments = await response.json();
+
+            commentsSection.innerHTML = ''; // Clear any existing comments.
+
+            // Render fetched comments.
+            comments.forEach(comment => {
+                const commentItem = document.createElement('p');
+                commentItem.textContent = `${comment.user_name}: ${comment.comment}`;
+                commentsSection.appendChild(commentItem);
+            });
+
+            commentsSection.style.display = 'block'; // Show the comments section.
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    } else {
+        commentsSection.style.display = 'none'; // Hide the comments section.
+    }
+}
+
+// Global function to handle "like" functionality
+async function likePost(tipId) {
+    try {
+        // Send a POST request to toggle the like for the tip.
+        const response = await fetch(`/auth/posts/${tipId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: 1 }) // Example user ID. Replace with dynamic ID if available.
+        });
+        const result = await response.json();
+
+        if (result.success) {
+            // Update the like count dynamically.
+            const likeCountElement = document.getElementById(`like-count-${tipId}`);
+            const currentLikes = parseInt(likeCountElement.textContent);
+            likeCountElement.textContent = result.action === 'liked' ? currentLikes + 1 : currentLikes - 1; // Adjust based on the action.
+        } else {
+            console.error('Failed to toggle like:', result.message);
+        }
+    } catch (error) {
+        console.error('Error liking post:', error);
+    }
+}
+
+// Infinite Scrolling functionality
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        currentPage++; // Move to the next page.
+        fetchPosts(currentPage); // Load the next set of posts.
+    }
+});
+
+// Initial Load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPosts(currentPage); // Fetch posts when the page loads.
+});
+
+// Event listener for the "Get Tips" button
+if (getTipsBtn) {
+    getTipsBtn.addEventListener('click', function () {
+      
+        // Hide the dashboard
+        if (dashboardCards) dashboardCards.style.display = 'none';
+        
+        // Show the tips container
+        if (tipsContainer) tipsContainer.style.display = 'block';
+        
+        // Fetch and display tips after the page switch
+        fetchPosts(1); // Optionally, fetch posts for the first page or the desired page
+    });
+} else {
     console.error('Get Tips button not found');
-  }
+}
+
+
+
+
   
   
   

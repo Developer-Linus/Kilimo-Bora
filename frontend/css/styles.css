@@ -665,51 +665,52 @@ body.register-main{
     transform: translateY(1px); /* Button presses down slightly */
 }
 
-/* Tips Section */
-#tips-section {
-    width: calc(100% - 300px); /* Adjust width considering the sidebar width */
-    max-width: 100%;
-    margin-left: 300px; /* Align with the sidebar width */
-    margin-top: 40px;
-    padding: 20px;
-    background: rgba(190, 192, 93, 0.50);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+/* Posts Section */
+#posts-container {
+    max-width: 800px;
+    margin: 20px auto; /* Center the posts container */
+    padding: 10px;
+    background: rgba(190, 192, 93, 0.50); /* Same background as #tips-section */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Consistent box-shadow */
+    border-radius: 10px; /* Rounded corners consistent with tip cards */
+    box-sizing: border-box; /* Ensures padding and border are included in width */
+    margin-left: 300px;
 }
 
-/* Tip Card */
-.tip-card {
+/* Post Card */
+.post-card {
     background: #ffffff;
-    border: 1px solid #45a049;
+    border: 1px solid #45a049; /* Border color similar to tip cards */
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Spacing between posts */
     padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Tip Card Header */
-.tip-card h3 {
+/* Post Card Hover */
+.post-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Post Card Header */
+.post-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #2c3e50;
+    color: #2c3e50; /* Dark color for headings similar to tip cards */
 }
 
-/* Tip Card Paragraph */
-.tip-card p {
+/* Post Card Paragraph */
+.post-card p {
     font-size: 1rem;
-    color: #555;
+    color: #555; /* Light gray color for content text */
     line-height: 1.6;
 }
 
-/* Tip Footer */
-.tip-footer {
-    margin-top: 15px;
-}
-
-/* Comments Toggle Button */
-.comments-toggle {
-    background: #607938;
+/* Post Card Button */
+.post-card button {
+    background-color: #607938; /* Similar color to comments toggle button */
     color: #ffffff;
     border: none;
     padding: 8px 12px;
@@ -719,14 +720,14 @@ body.register-main{
     transition: background-color 0.3s ease;
 }
 
-.comments-toggle:hover {
-    background: #E0A152;
+.post-card button:hover {
+    background-color: #E0A152; /* Hover color consistent with comments toggle */
 }
 
-/* Comments Section */
+/* Comments Section (inside post card) */
 .comments-section {
     margin-top: 10px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.05); /* Light gray background for comments */
     border-radius: 5px;
     padding: 10px;
 }
@@ -747,4 +748,32 @@ body.register-main{
 
 .comments-list li:last-child {
     border-bottom: none;
+}
+
+/* Infinite Scrolling Loader */
+#loading-spinner {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #008caf; /* Same color as the button */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+    #posts-container {
+        padding: 5px;
+    }
+
+    .post-card {
+        padding: 10px;
+    }
+
+    .post-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .post-card button {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
 }

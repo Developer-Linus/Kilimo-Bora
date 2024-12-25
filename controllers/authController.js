@@ -118,10 +118,23 @@ exports.getTips = async (req, res) => {
     try{
         // Fetch all tips
         const [tips] = await db.execute(`
-            SELECT t.tip_id, t.title, t.content, t.user_id, COUNT(c.comment_id) AS comment_count
-            FROM tips t
-            LEFT JOIN comments c ON t.tip_id = c.tip_id
-            GROUP BY t.tip_id;
+            SELECT 
+            t.tip_id,
+            t.title,
+            t.content,
+            u.first_name AS author,
+            COUNT(c.comment_id) AS comments,
+            COUNT(l.like_id) AS likes
+            FROM 
+                tips t
+            JOIN 
+                users u ON t.user_id = u.user_id
+            LEFT JOIN 
+                comments c ON t.tip_id = c.tip_id
+            LEFT JOIN 
+                likes l ON t.tip_id = l.tip_id
+            GROUP BY 
+                t.tip_id, u.first_name;
             `);
         
         // Respond with tips
@@ -150,6 +163,68 @@ exports.getComments = async (req, res) =>{
     } catch(error){
         console.error('Error fetching comments:', error);
         res.status(500).json({message: 'Server error while fetching comments.'});
+    }
+};
+
+// Function to fetch likes for a specific tip
+exports.getLikes = async (req, res) => {
+    const { tipId } = req.params; // Extract the tipId from the route
+    const userId = req.query.userId; // Optionally get the userId from query parameters
+
+    try {
+        // Query to count total likes for the given tip
+        const [totalLikesResult] = await db.execute(
+            `SELECT COUNT(*) AS total_likes FROM likes WHERE tip_id = ?`,
+            [tipId]
+        );
+
+        const totalLikes = totalLikesResult[0]?.total_likes || 0;
+
+        // Query to check if the user has liked the tip
+        let userHasLiked = false;
+        if (userId) {
+            const [userLikeResult] = await db.execute(
+                `SELECT COUNT(*) AS user_liked FROM likes WHERE tip_id = ? AND user_id = ?`,
+                [tipId, userId]
+            );
+            userHasLiked = userLikeResult[0]?.user_liked > 0;
+        }
+
+        // Send the response
+        res.status(200).json({ total_likes: totalLikes, user_has_liked: userHasLiked });
+    } catch (error) {
+        console.error('Error fetching likes:', error);
+        res.status(500).json({ message: 'Server error while fetching likes.' });
+    }
+};
+
+// Function to update likes
+exports.toggleLike = async (req, res) => {
+    const { tipId } = req.params; // Extract the tipId from the route
+    const { userId } = req.body; // User ID should be sent in the request body
+
+    try {
+        // Check if the user has already liked the tip
+        const [existingLike] = await db.execute(
+            `SELECT like_id FROM likes WHERE tip_id = ? AND user_id = ?`,
+            [tipId, userId]
+        );
+
+        if (existingLike.length > 0) {
+            // If a like exists, remove it (unlike)
+            await db.execute(`DELETE FROM likes WHERE like_id = ?`, [existingLike[0].like_id]);
+            res.status(200).json({ success: true, message: 'Like removed.' });
+        } else {
+            // If no like exists, add a new like
+            await db.execute(
+                `INSERT INTO likes (tip_id, user_id) VALUES (?, ?)`,
+                [tipId, userId]
+            );
+            res.status(200).json({ success: true, message: 'Like added.' });
+        }
+    } catch (error) {
+        console.error('Error updating like:', error);
+        res.status(500).json({ message: 'Server error while updating like.' });
     }
 };
 

@@ -36,6 +36,12 @@ router.get('/GET/tips', authController.getTips);
 // Retrieve comments for a specific tip
 router.get('/GET/tips/:tipId/comments', authController.getComments);
 
+// Route to fetch likes for a specific tip
+router.get('/posts/:tipId/likes', authController.getLikes);
+
+// Route to toggle (add/remove) a like for a specific tip
+router.post('/posts/:tipId/like', authController.toggleLike);
+
 
 
 module.exports = router;
