@@ -4,9 +4,22 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 
 // load environment variables
 dotenv.config();
+
+// Set up multer for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); // Folder where images will be stored
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Add a timestamp to avoid filename conflicts
+    }
+});
+
+const upload = multer({ storage: storage }).single('profilePicture'); // 'profilePicture' matches the form field name
 
 // Function to handle user registration
 exports.registerUser = async(req, res)=>{
@@ -90,6 +103,72 @@ exports.loginUser = async(req, res)=>{
         res.status(500).json({message: 'Error occured while processing your request.'});
     }
 }
+
+// Function to update profile
+// Function to update profile
+exports.updateProfile = async (req, res) => {
+    try {
+        // Extract and verify the JWT token
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'Unauthorized: No token provided' });
+        }
+
+        const token = authHeader.split(' ')[1];
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace JWT_SECRET with your actual secret
+        } catch (err) {
+            return res.status(403).json({ message: 'Unauthorized: Invalid token' });
+        }
+
+        const userIdFromToken = decoded.user_id; // Extract user ID from token
+
+        // Extract form data from the request
+        const { first_name, last_name, email } = req.body;
+
+        // Validate required fields
+        if (!first_name || !last_name || !email) {
+            return res.status(400).json({ message: 'First name, last name, and email are required' });
+        }
+
+        // Check if the new email is already in use by another user
+        const emailCheckQuery = `SELECT user_id FROM users WHERE email = ? AND user_id != ?`;
+        const [emailCheckRows] = await db.execute(emailCheckQuery, [email, userIdFromToken]);
+
+        if (emailCheckRows.length > 0) {
+            return res.status(409).json({ message: 'Email is already in use by another user' });
+        }
+
+        // Handle profile image upload (if applicable)
+        let profile_image = null;
+        if (req.file) {
+            profile_image = req.file.filename; // Save the uploaded file's filename
+        }
+
+        // Update the user's profile in the database
+        const updateQuery = `
+            UPDATE users
+            SET first_name = ?, last_name = ?, email = ?, profile_image = COALESCE(?, profile_image)
+            WHERE user_id = ?
+        `;
+        const params = [first_name, last_name, email, profile_image || null, userIdFromToken]; // Set profile_image to null if not provided
+
+        const [result] = await db.execute(updateQuery, params);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found or no changes made' });
+        }
+
+        // Return a success response
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        console.error('Error updating profile:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
 // Add Contact Us message
 exports.addContactMessage = async (req, res) => {
     try {
@@ -123,7 +202,7 @@ exports.getTips = async (req, res) => {
             t.title,
             t.content,
             u.first_name AS author,
-            COUNT(c.comment_id) AS comments,
+            COUNT(c.tip_id) AS comments,
             COUNT(l.like_id) AS likes
             FROM 
                 tips t
@@ -163,6 +242,29 @@ exports.getComments = async (req, res) =>{
     } catch(error){
         console.error('Error fetching comments:', error);
         res.status(500).json({message: 'Server error while fetching comments.'});
+    }
+};
+
+// Function to add a comment for a specific tip
+exports.addComment = async (req, res) => {
+    const { tipId } = req.params; // Extract tipId from the route
+    const { userId, comment } = req.body; // Get userId and comment from the request body
+
+    if (!comment || comment.trim() === '') {
+        return res.status(400).json({ message: 'Comment cannot be empty.' });
+    }
+
+    try {
+        // Insert the new comment into the database
+        await db.execute(
+            `INSERT INTO comments (tip_id, user_id, comment) VALUES (?, ?, ?)`,
+            [tipId, userId, comment]
+        );
+
+        res.status(201).json({ success: true, message: 'Comment added successfully.' });
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        res.status(500).json({ message: 'Server error while adding comment.' });
     }
 };
 
@@ -213,20 +315,21 @@ exports.toggleLike = async (req, res) => {
         if (existingLike.length > 0) {
             // If a like exists, remove it (unlike)
             await db.execute(`DELETE FROM likes WHERE like_id = ?`, [existingLike[0].like_id]);
-            res.status(200).json({ success: true, message: 'Like removed.' });
+            res.status(200).json({ success: true, action: 'unliked', message: 'Like removed.' });
         } else {
             // If no like exists, add a new like
             await db.execute(
                 `INSERT INTO likes (tip_id, user_id) VALUES (?, ?)`,
                 [tipId, userId]
             );
-            res.status(200).json({ success: true, message: 'Like added.' });
+            res.status(200).json({ success: true, action: 'liked', message: 'Like added.' });
         }
     } catch (error) {
         console.error('Error updating like:', error);
         res.status(500).json({ message: 'Server error while updating like.' });
     }
 };
+
 
 // Function to view user profile
 exports.viewProfile = async (req, res) => {

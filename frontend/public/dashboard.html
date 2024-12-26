@@ -116,39 +116,40 @@
         </div>
 
         <!-- Form Section -->
-        <div class="form-section">
-            <h2>Update Your Profile</h2>
-            <form id="editProfileForm">
-                <!-- First Name -->
-                <div class="form-group">
-                    <label for="editFirstName">First Name</label>
-                    <input type="text" id="editFirstName" name="editFirstName" placeholder="Enter your first name" required>
-                </div>
-    
-                <!-- Last Name -->
-                <div class="form-group">
-                    <label for="editLastName">Last Name</label>
-                    <input type="text" id="editLastName" name="editLastName" placeholder="Enter your last name" required>
-                </div>
-    
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="editEmail">Email</label>
-                    <input type="email" id="editEmail" name="editEmail" placeholder="Enter your email address" required>
-                </div>
-
-                <!-- Profile Picture Upload -->
-                <div class="form-group">
-                    <label for="profilePicture">Profile Picture</label>
-                    <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
-                </div>
-    
-                <!-- Submit Button -->
-                <div class="form-actions">
-                    <button type="submit" id="saveProfileBtn" class="btn-primary">Save Changes</button>
-                </div>
-            </form>
+<div class="form-section">
+    <h2>Update Your Profile</h2>
+    <form id="editProfileForm">
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="editFirstName">First Name</label>
+            <input type="text" id="editFirstName" name="first_name" placeholder="Enter your first name" required>
         </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="editLastName">Last Name</label>
+            <input type="text" id="editLastName" name="last_name" placeholder="Enter your last name" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input type="email" id="editEmail" name="email" placeholder="Enter your email address" required>
+        </div>
+
+        <!-- Profile Picture Upload -->
+        <div class="form-group">
+            <label for="profilePicture">Profile Picture</label>
+            <input type="file" id="profilePicture" name="profile_image" accept="image/*">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+            <button type="submit" id="saveProfileBtn" class="btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
         
         <!-- Logout Button -->
         <button type="button" id="logoutBtn" class="btn-secondary" aria-label="Logout from your profile">Logout</button>
@@ -157,7 +158,9 @@
     <!--Tips Section-->
     <section id="tips-section" style = "display: none;">
         <h1>Posts</h1>
-        <div id="posts-container"></div> <!-- This is where the posts will be displayed -->
+        <div id="posts-container">
+        </div> <!-- This is where the posts will be displayed -->
+
       </section>
       
 

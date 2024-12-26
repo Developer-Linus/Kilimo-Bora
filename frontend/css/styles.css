@@ -667,7 +667,7 @@ body.register-main{
 
 /* Posts Section */
 #posts-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto; /* Center the posts container */
     padding: 10px;
     background: rgba(190, 192, 93, 0.50); /* Same background as #tips-section */
@@ -777,3 +777,9 @@ body.register-main{
         padding: 6px 10px;
     }
 }
+
+
+
+
+
+

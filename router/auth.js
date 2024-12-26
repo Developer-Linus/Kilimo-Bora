@@ -36,11 +36,17 @@ router.get('/GET/tips', authController.getTips);
 // Retrieve comments for a specific tip
 router.get('/GET/tips/:tipId/comments', authController.getComments);
 
+// Add a comment to a specific tip
+router.post('/POST/:tipId/comments', authController.addComment);
+
 // Route to fetch likes for a specific tip
 router.get('/posts/:tipId/likes', authController.getLikes);
 
 // Route to toggle (add/remove) a like for a specific tip
 router.post('/posts/:tipId/like', authController.toggleLike);
+
+// Route for updating profile
+router.post('/POST/updateProfile', authController.updateProfile);
 
 
 

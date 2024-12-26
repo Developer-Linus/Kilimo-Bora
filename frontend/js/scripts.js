@@ -235,6 +235,20 @@ loginForm?.addEventListener('submit', async (event) => {
     }
 });
 
+// Fetch the user details from localStorage
+const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+// Check if userDetails exists and contains the firstName property
+if (userDetails && userDetails.firstName) {
+    // Get the span element by its ID
+    const userNameElement = document.getElementById('user-name');
+    
+    // Set the inner text of the span to the logged-in user's first name
+    userNameElement.textContent = userDetails.firstName;
+} else {
+    console.log('User details not found or firstName not available.');
+}
+
 // View user profile
 profileBtn?.addEventListener('click', async (event) => {
     event.preventDefault(); // Prevent the default behavior (navigating) for debugging
@@ -291,7 +305,6 @@ async function getUser() {
     }
 }
 
-
 // Add contact us message
 contactForm?.addEventListener('submit', async(event) => {
     event.preventDefault(); // Prevent form from refreshing the page
@@ -334,24 +347,31 @@ document.getElementById('editProfileForm')?.addEventListener('submit', async (ev
         return;
     }
 
-    const formData = new FormData(document.getElementById('editProfileForm'));
+    const form = document.getElementById('editProfileForm');
+    const formData = new FormData(form);
+
+    // Debugging: Log form data keys and values
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
 
     try {
         const response = await fetch('/auth/POST/updateProfile', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, // Send token in authorization header
+                // Note: No Content-Type header; it's set automatically by FormData
             },
-            body: formData,
+            body: formData, // FormData includes all the form fields and file data
         });
 
         const result = await response.json();
 
-        if (response.status === 200) {
+        if (response.ok) {
             alert('Profile updated successfully!');
             window.location.reload(); // Reload page to reflect changes
         } else {
-            alert('Failed to update profile: ' + result.message);
+            alert(`Failed to update profile: ${result.message}`);
         }
     } catch (error) {
         console.error('Error updating profile:', error);
@@ -396,84 +416,46 @@ async function fetchPosts(page = 1) {
 }
 
 function renderPosts(posts) {
-    const postsContainer = document.getElementById('posts-container'); // Locate the container for posts.
+    const postsContainer = document.getElementById('posts-container');
 
     posts.forEach(post => {
-        const postCard = document.createElement('div'); // Create a container for each post.
-        postCard.className = 'post-card'; // Add a CSS class for styling.
+        const postCard = document.createElement('div');
+        postCard.className = 'post-card';
 
-        // Populate the card with title, content, author, comments, and likes.
+        // Add the post content, including comments section with textarea and button inside
         postCard.innerHTML = `
             <h3>${post.title}</h3>
             <p>${post.content}</p>
             <p><strong>Author:</strong> ${post.author}</p>
             <p>
-                <strong>Comments:</strong> 
-                <span id="comment-count-${post.tip_id}">${post.comments}</span> 
+                <strong>Comments:</strong>
+                <span id="comment-count-${post.tip_id}">${post.comments}</span>
                 <button onclick="toggleComments(${post.tip_id})">View Comments</button>
             </p>
-            <div id="comments-${post.tip_id}" class="comments-section" style="display: none;"></div>
+            <div id="comments-${post.tip_id}" class="comments-section" style="display: none;">
+                <ul id="comments-list-${post.tip_id}"></ul>
+                <textarea id="new-comment-${post.tip_id}" placeholder="Write a comment..." rows="2" class="comment-input"></textarea>
+                <button onclick="addComment(${post.tip_id})" class="add-comment-btn">Add Comment</button>
+            </div>
             <p>
-                <strong>Likes:</strong> 
-                <span id="like-count-${post.tip_id}">${post.likes}</span> 
+                <strong>Likes:</strong>
+                <span id="like-count-${post.tip_id}">${post.likes}</span>
                 <button onclick="likePost(${post.tip_id})">Like</button>
             </p>
         `;
 
-        postsContainer.appendChild(postCard); // Append the card to the container.
+        postsContainer.appendChild(postCard);
     });
 }
 
-// Global function to toggle comments for a post
-async function toggleComments(tipId) {
-    const commentsSection = document.getElementById(`comments-${tipId}`); // Find the comments section.
 
-    if (commentsSection.style.display === 'none') {
-        try {
-            const response = await fetch(`/auth/GET/tips/${tipId}/comments`); // Fetch comments for the post.
-            const comments = await response.json();
 
-            commentsSection.innerHTML = ''; // Clear any existing comments.
 
-            // Render fetched comments.
-            comments.forEach(comment => {
-                const commentItem = document.createElement('p');
-                commentItem.textContent = `${comment.user_name}: ${comment.comment}`;
-                commentsSection.appendChild(commentItem);
-            });
+// Initial post fetch when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPosts(currentPage);
+});
 
-            commentsSection.style.display = 'block'; // Show the comments section.
-        } catch (error) {
-            console.error('Error fetching comments:', error);
-        }
-    } else {
-        commentsSection.style.display = 'none'; // Hide the comments section.
-    }
-}
-
-// Global function to handle "like" functionality
-async function likePost(tipId) {
-    try {
-        // Send a POST request to toggle the like for the tip.
-        const response = await fetch(`/auth/posts/${tipId}/like`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: 1 }) // Example user ID. Replace with dynamic ID if available.
-        });
-        const result = await response.json();
-
-        if (result.success) {
-            // Update the like count dynamically.
-            const likeCountElement = document.getElementById(`like-count-${tipId}`);
-            const currentLikes = parseInt(likeCountElement.textContent);
-            likeCountElement.textContent = result.action === 'liked' ? currentLikes + 1 : currentLikes - 1; // Adjust based on the action.
-        } else {
-            console.error('Failed to toggle like:', result.message);
-        }
-    } catch (error) {
-        console.error('Error liking post:', error);
-    }
-}
 
 // Infinite Scrolling functionality
 window.addEventListener('scroll', () => {
@@ -520,3 +502,178 @@ if (getTipsBtn) {
 
 
 })
+
+
+
+
+
+// Global function to toggle comments for a post
+async function toggleComments(tipId) {
+    const commentsSection = document.getElementById(`comments-${tipId}`);
+    
+    // Check if the comments section exists
+    if (!commentsSection) {
+        console.error(`No comments section found for tipId: ${tipId}`);
+        return;
+    }
+
+    if (commentsSection.style.display === 'none') {
+        try {
+            // Fetch comments from the backend
+            const response = await fetch(`/auth/GET/tips/${tipId}/comments`);
+            if (!response.ok) throw new Error(`Failed to fetch comments: ${response.statusText}`);
+            
+            // Parse the JSON response
+            const data = await response.json();
+            
+            // Determine the structure of the response and extract comments
+            const comments = Array.isArray(data) ? data : data.comments || [];
+            
+            // Clear existing comments in the section
+            const commentsList = commentsSection.querySelector('ul');
+            commentsList.innerHTML = '';  // Clear previous comments
+
+            if (comments.length === 0) {
+                // Show a message if there are no comments
+                commentsList.innerHTML = '<li>No comments yet.</li>';
+            } else {
+                // Render each comment in the comments section
+                comments.forEach(comment => {
+                    const commentItem = document.createElement('li');
+                    commentItem.textContent = `${comment.first_name}: ${comment.comment}`;
+                    commentsList.appendChild(commentItem);
+                });
+            }
+
+            // Show the comments section and input form
+            commentsSection.style.display = 'block';
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    } else {
+        // Hide the comments section and input form if it's already displayed
+        commentsSection.style.display = 'none';
+    }
+}
+
+
+// Global function to handle "like" functionality
+async function likePost(tipId) {
+    try {
+        const userId = 1; // Replace with dynamic user ID if available.
+
+        // Send a POST request to toggle the like for the post.
+        const response = await fetch(`/auth/posts/${tipId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId }) // Include dynamic user ID if available.
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Ensure that we only increment the like count if the user has not already liked the post.
+            const likeCountElement = document.getElementById(`like-count-${tipId}`);
+            const currentLikes = parseInt(likeCountElement.textContent);
+
+            // If the action is "liked", increment the like count; otherwise, do nothing.
+            if (result.action === 'liked') {
+                likeCountElement.textContent = currentLikes + 1;
+            } else if (result.action === 'unliked') {
+                // If the action is "unliked", we decrement the like count (if necessary).
+                likeCountElement.textContent = currentLikes - 1;
+            }
+        } else {
+            console.error('Failed to toggle like:', result.message);
+        }
+    } catch (error) {
+        console.error('Error liking post:', error);
+    }
+}
+
+// Function to add a new comment to a specific post.
+async function addComment(tipId) {
+    // Get the comment input field for the specific post using its dynamic ID.
+    const commentInput = document.getElementById(`new-comment-${tipId}`);
+
+    // Retrieve and trim the user's input to remove unnecessary whitespace.
+    const newComment = commentInput.value.trim();
+
+    // Retrieve the logged-in user's details from localStorage
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    
+    // Check if the user is logged in
+    if (!userDetails) {
+        alert('You must be logged in to add a comment.');
+        return;
+    }
+
+    // Get the logged-in user's ID from userDetails
+    const userId = userDetails.userId;
+
+    // Check if the comment input is empty and alert the user if so.
+    if (!newComment) {
+        alert('Comment cannot be empty.');
+        return; // Exit the function early if the input is invalid.
+    }
+
+    try {
+        // Send the new comment data to the server using the Fetch API.
+        const response = await fetch(`/auth/POST/${tipId}/comments`, {
+            method: 'POST', // HTTP method for creating new resources.
+            headers: { 'Content-Type': 'application/json' }, // Specify JSON format for request body.
+            body: JSON.stringify({ userId, comment: newComment }) // Convert data to JSON string.
+        });
+
+        // Parse the server's response into JSON format.
+        const data = await response.json();
+
+        // Check if the server indicates success and update the UI accordingly.
+        if (data.success) {
+            alert(data.message); // Notify the user that the comment was successfully added.
+
+            commentInput.value = ''; // Clear the input field after successful submission.
+
+            fetchComments(tipId); // Refresh the comment list to include the newly added comment.
+
+            // Locate the comment count element and increment its value.
+            const commentCount = document.getElementById(`comment-count-${tipId}`);
+            commentCount.textContent = parseInt(commentCount.textContent) + 1; // Update the displayed comment count.
+        } else {
+            // Alert the user if the server indicates failure.
+            alert('Failed to add comment.');
+        }
+    } catch (error) {
+        // Log any errors that occur during the fetch request or response handling.
+        console.error('Error adding comment:', error);
+    }
+}
+
+
+// Function to fetch comments for a specific post
+async function fetchComments(tipId) {
+    try {
+        // Make an API call to fetch comments for the specific tip (post)
+        const response = await fetch(`/auth/GET/tips/${tipId}/comments`);
+        
+        // Check if the response is successful
+        if (!response.ok) {
+            throw new Error(`Failed to fetch comments for tipId: ${tipId}`);
+        }
+
+        // Parse the JSON response
+        const data = await response.json();
+        
+        // Extract comments from the response, assuming the response has a 'comments' array
+        const comments = Array.isArray(data) ? data : data.comments || [];
+        
+        // Return the comments array
+        return comments;
+    } catch (error) {
+        // Log any error that occurs during the fetch
+        console.error('Error fetching comments:', error);
+        return [];
+    }
+}
+
+
