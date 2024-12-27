@@ -265,12 +265,13 @@ async function getUser() {
         return;
     }
 
-      // Select DOM elements
-      const firstNameSpan = document.getElementById('profileFirstName');
-      const lastNameSpan = document.getElementById('profileLastName');
-      const emailSpan = document.getElementById('profileEmail');
+    // Select DOM elements
+    const firstNameSpan = document.getElementById('profileFirstName');
+    const lastNameSpan = document.getElementById('profileLastName');
+    const emailSpan = document.getElementById('profileEmail');
+    const profileImage = document.getElementById('displayProfilePicture'); // Profile image element
 
-      if (!firstNameSpan || !lastNameSpan || !emailSpan) {
+    if (!firstNameSpan || !lastNameSpan || !emailSpan || !profileImage) {
         console.error('One or more profile elements not found in DOM.');
         return;
     }
@@ -293,10 +294,17 @@ async function getUser() {
 
             profileSection.style.display = 'block';
 
-            // Access nested data correctly
+            // Access nested data correctly and update profile details
             firstNameSpan.textContent = result.user.firstName;
             lastNameSpan.textContent = result.user.lastName;
             emailSpan.textContent = result.user.email;
+
+            // Update profile picture if available
+            if (result.user.profileImage) {
+                profileImage.src = result.user.profileImage;
+            } else {
+                profileImage.src = 'path/to/default-image.jpg'; // Set a default image if none exists
+            }
         } else {
             console.log('Failed to fetch user details', result.message);
         }
@@ -352,7 +360,12 @@ document.getElementById('editProfileForm')?.addEventListener('submit', async (ev
 
     // Debugging: Log form data keys and values
     for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
+        // Check if value is a File (i.e., profile_image)
+        if (value instanceof File) {
+            console.log(`${key}: [File]`);
+        } else {
+            console.log(`${key}:`, value); // Log value explicitly to check form data
+        }
     }
 
     try {
@@ -360,7 +373,6 @@ document.getElementById('editProfileForm')?.addEventListener('submit', async (ev
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, // Send token in authorization header
-                // Note: No Content-Type header; it's set automatically by FormData
             },
             body: formData, // FormData includes all the form fields and file data
         });

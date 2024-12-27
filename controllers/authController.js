@@ -9,17 +9,22 @@ const multer = require('multer');
 // load environment variables
 dotenv.config();
 
-// Set up multer for file uploads
+// Multer configuration
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Folder where images will be stored
+        cb(null, 'uploads/'); // Ensure this path exists in your project
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // Add a timestamp to avoid filename conflicts
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
-const upload = multer({ storage: storage }).single('profilePicture'); // 'profilePicture' matches the form field name
+const upload = multer({ storage: storage });
+
+// Middleware for handling file uploads
+exports.upload = upload.single('profile_image'); // Matches the `name` attribute in the form
+
+
 
 // Function to handle user registration
 exports.registerUser = async(req, res)=>{
@@ -105,10 +110,9 @@ exports.loginUser = async(req, res)=>{
 }
 
 // Function to update profile
-// Function to update profile
 exports.updateProfile = async (req, res) => {
     try {
-        // Extract and verify the JWT token
+        // Extract authorization header
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ message: 'Unauthorized: No token provided' });
@@ -116,15 +120,16 @@ exports.updateProfile = async (req, res) => {
 
         const token = authHeader.split(' ')[1];
         let decoded;
+
+        // Verify JWT
         try {
-            decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace JWT_SECRET with your actual secret
+            decoded = jwt.verify(token, process.env.JWT_SECRET);
         } catch (err) {
             return res.status(403).json({ message: 'Unauthorized: Invalid token' });
         }
 
-        const userIdFromToken = decoded.user_id; // Extract user ID from token
+        const userIdFromToken = decoded.userId;
 
-        // Extract form data from the request
         const { first_name, last_name, email } = req.body;
 
         // Validate required fields
@@ -132,42 +137,42 @@ exports.updateProfile = async (req, res) => {
             return res.status(400).json({ message: 'First name, last name, and email are required' });
         }
 
-        // Check if the new email is already in use by another user
-        const emailCheckQuery = `SELECT user_id FROM users WHERE email = ? AND user_id != ?`;
-        const [emailCheckRows] = await db.execute(emailCheckQuery, [email, userIdFromToken]);
+        // Ensure profile_image is null if no file is uploaded
+        let profile_image = req.file ? req.file.filename : null;
 
-        if (emailCheckRows.length > 0) {
-            return res.status(409).json({ message: 'Email is already in use by another user' });
-        }
-
-        // Handle profile image upload (if applicable)
-        let profile_image = null;
-        if (req.file) {
-            profile_image = req.file.filename; // Save the uploaded file's filename
-        }
-
-        // Update the user's profile in the database
+        // SQL query for updating profile
         const updateQuery = `
             UPDATE users
-            SET first_name = ?, last_name = ?, email = ?, profile_image = COALESCE(?, profile_image)
+            SET first_name = ?, 
+                last_name = ?, 
+                email = ?, 
+                profile_image = COALESCE(?, profile_image)
             WHERE user_id = ?
         `;
-        const params = [first_name, last_name, email, profile_image || null, userIdFromToken]; // Set profile_image to null if not provided
+        const params = [
+            first_name || null, // Default to null if undefined
+            last_name || null,  // Default to null if undefined
+            email || null,      // Default to null if undefined
+            profile_image, 
+            userIdFromToken
+        ];
+
+        console.log('SQL Query Params:', params); // Debugging: Log query parameters
 
         const [result] = await db.execute(updateQuery, params);
 
+        // Handle result
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'User not found or no changes made' });
         }
 
-        // Return a success response
         res.status(200).json({ message: 'Profile updated successfully' });
     } catch (err) {
+        // Log server error
         console.error('Error updating profile:', err);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
 
 // Add Contact Us message
 exports.addContactMessage = async (req, res) => {
@@ -348,7 +353,7 @@ exports.viewProfile = async (req, res) => {
 
         // Fetch user details from the database using the userId from the decoded token
         const [rows] = await db.execute(
-            'SELECT first_name AS firstName, last_name AS lastName, email FROM users WHERE user_id = ?',
+            'SELECT first_name AS firstName, last_name AS lastName, email, profile_image FROM users WHERE user_id = ?',
             [decoded.userId]
         );
 
@@ -357,10 +362,21 @@ exports.viewProfile = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Return user details
+        // Get the user details and profile image path
         const user = rows[0];
-        return res.status(200).json({ user });
-        console.log(user);
+
+        // Construct the profile image URL (adjust path as needed for your app)
+        const profileImageUrl = user.profile_image ? `/uploads/${user.profile_image}` : null;
+
+        // Return user details along with the profile image URL
+        return res.status(200).json({
+            user: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                profileImage: profileImageUrl, // Include profile image URL
+            }
+        });
     } catch (error) {
         console.error('Error verifying token or querying database:', error);
 
@@ -372,6 +388,7 @@ exports.viewProfile = async (req, res) => {
         return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
+
 
 
 

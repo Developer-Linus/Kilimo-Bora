@@ -46,7 +46,7 @@ router.get('/posts/:tipId/likes', authController.getLikes);
 router.post('/posts/:tipId/like', authController.toggleLike);
 
 // Route for updating profile
-router.post('/POST/updateProfile', authController.updateProfile);
+router.post('/POST/updateProfile',authController.upload, authController.updateProfile);
 
 
 

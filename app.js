@@ -30,6 +30,9 @@ app.use('/auth', authRoutes);
 // Serve static files from the 'frontend' directory
 app.use(express.static(path.join(__dirname, 'frontend')));
 
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Start the server
 app.listen(port, ()=>{
     console.log(`Server is running on http://localhost:${port}`);
