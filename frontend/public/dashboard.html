@@ -10,10 +10,17 @@
 </head>
 <body class = "dashboard">
      <!-- Header Section -->
-     <header>
+    <header>
         <nav>
             <div class="logo">
-                <a href="./index.html"><img src="../assets/images/logo.svg" alt="Kilimo Bora logo" /></a>
+                <a href="./index.html">
+                    <img src="../assets/images/logo.svg" alt="Kilimo Bora logo" />
+                </a>
+            </div>
+            <div class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
@@ -22,7 +29,7 @@
                 <li><a href="./public/login.html">Logout</a></li>
             </ul>
         </nav>
-    </header>
+    </header>    
     <!-- Sidebar -->
     <div class="sidebar">
         <div class = "sidebar-header">
@@ -96,9 +103,7 @@
                 <button class="btn" onclick="window.location.href='#settings';">Download</button>
             </div>
         </div>
-    </div>
-
-    <!--Profile Section-->
+        <!--Profile Section-->
 
     <div class ="profile-container" id = "profile-section" style = "display: none;">
         <h1>Your Profile</h1>
@@ -157,18 +162,12 @@
 
     <!--Tips Section-->
     <section id="tips-section" style = "display: none;">
-        <h1>Posts</h1>
         <div id="posts-container">
+            <h1>Posts</h1>
         </div> <!-- This is where the posts will be displayed -->
 
       </section>
-      
-
-
-
-
-
-
+    </div>
     <script src="../js/scripts.js"></script>
 </body>
 </html>

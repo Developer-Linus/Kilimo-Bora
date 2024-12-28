@@ -37,7 +37,6 @@ a:hover {
     width: 250px;
     height: 100vh;
     background-color: rgba(218, 196, 172, 0.75);
-    color: green;
     padding: 20px;
     position: fixed;
     left: 0;
@@ -126,17 +125,11 @@ header nav {
     object-fit: contain;
 }
 
-.nav-toggle {
-    display: none;
-}
-
-.nav-toggle-label {
-    display: none;
-}
-
+/* Navigation Links */
 .nav-links {
     list-style-type: none;
     display: flex;
+    transition: transform 0.3s ease-in-out;
 }
 
 .nav-links li {
@@ -152,6 +145,21 @@ header nav {
 
 .nav-links li a:hover {
     color: #BBB4A4;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger-menu span {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
 }
 
 /* Main sections styles */
@@ -503,7 +511,7 @@ body.register-main{
 }
 
 .card {
-    background-color: rgba(245, 245, 245, 0.75);
+    background-color: rgba(218, 196, 172, 0.75);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -520,14 +528,14 @@ body.register-main{
     font-family: "Delius", cursive;
     font-weight: 650;
     font-style: normal;
-    color: #333;
+    color: #4F1E0F;
     margin-bottom: 10px;
 }
 
 .card p {
     font-size: 1.2rem;
     line-height: 2rem;
-    color: #777;
+    color: #fff;
     margin-bottom: 20px;
 }
 
@@ -535,8 +543,8 @@ body.register-main{
     display: inline-block; /* Ensure button appears as a block within text context */
     font-size: 1rem;
     font-family: "Roboto", sans-serif; /* Use a legible font for buttons */
-    color: #fff;
-    background-color: #008caf;
+    color: #4F1E0F;;
+    background-color: rgba(218,196, 172, 0.75);
     border: none; /* Remove default button border */
     border-radius: 5px;
     padding: 10px 20px;
@@ -545,13 +553,13 @@ body.register-main{
 }
 
 .card .btn:hover {
-    background-color: #005f7f;
+    background-color: #FEF2A6;
     transform: scale(1.05); /* Slight enlargement on hover */
 }
 
 .card i {
     font-size: 40px;
-    color: #333; /* Icon color matches the card text */
+    color: #4F1E0F;
     margin-bottom: 15px;
 }
 
@@ -559,7 +567,7 @@ body.register-main{
 .profile-container {
     width: calc(100% - 300px); /* Adjust width considering the sidebar width */
     max-width: 100%;
-    margin-left: 300px; /* Align with the sidebar width */
+    margin: 4rem auto;
     background: rgba(190, 192, 93, 0.70);
     border-radius: 1.5rem;
     padding: 2rem;
@@ -758,8 +766,61 @@ body.register-main{
     color: #008caf; /* Same color as the button */
 }
 
+
 /* Media Queries for Responsiveness */
+@media (max-width: 1200px){
+    #home{
+        margin-top: 2.7rem;
+        margin-bottom: 1.6rem;
+    }
+    .hero-content>h2 {
+        font-size: 2.9em;
+    }
+    .hero-content>p{
+        font-size: 1.7em;
+    }
+    #services, #features{
+        width: 100%;
+    }
+    #services li, #features li{
+        flex: 1 1 50%;
+        max-width: 550px;
+    }
+    .main-content{
+        margin-left: 300px;
+    }
+    .profile-container{
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
 @media (max-width: 600px) {
+    .sidebar{
+        display: none;
+    }
+    #home{
+        margin-top: 0.5rem;
+    }
+    .hero-content>h2 {
+        font-size: 3em;
+    }
+    .hero-content>p{
+        font-size: 1.5em;
+    }
+
+    .main-content{
+        margin-left: 0;
+        width: 90%;
+    }
+    #services li, #features li{
+        flex: 1 1 50%;
+        max-width: 450px;
+    }
+    .profile-container{
+        margin-left: 0;
+        width: 100%;
+    }
     #posts-container {
         padding: 5px;
     }
@@ -775,6 +836,41 @@ body.register-main{
     .post-card button {
         font-size: 0.8rem;
         padding: 6px 10px;
+    }
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        gap: 15px;
+        padding: 1rem;
+        width: 200px;
+        transform: translateX(100%);
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin-left: 0;
+    }
+
+    .nav-links li a {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .cards {
+        display: grid;
+        grid-template-columns: 1fr;
     }
 }
 
