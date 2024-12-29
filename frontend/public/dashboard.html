@@ -29,7 +29,7 @@
                 <li><a href="./public/login.html">Logout</a></li>
             </ul>
         </nav>
-    </header>    
+    </header> 
     <!-- Sidebar -->
     <div class="sidebar">
         <div class = "sidebar-header">
@@ -51,12 +51,16 @@
 
     <!-- Main content -->
     <div class="main-content">
+        <div class="back-button">
+            <button onclick="goBack()" aria-label="Go Back">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+        </div>
         <!-- Welcome message -->
         <div class="welcome-message">
             <h1>Welcome, <span id = "user-name"></span>!</h1>
             <p>Welcome back to your dashboard. Here's what you can do on the platform.</p>
         </div>
-
         <!-- Dashboard Cards -->
         <div class="cards" id = "dashboard-cards">
             <div class="card">
@@ -70,6 +74,12 @@
                 <h3>Tips</h3>
                 <p>Get Farming Tips to Improve Your Farming.</p>
                 <button class="btn" id = "get-tips-btn" onclick="window.location.href='#tips-section';">Get Tips</button>
+            </div>
+            <div class="card">
+                <i class="fa fa-pen"></i>
+                <h3>Post</h3>
+                <p>Share tips with your fellow farmers to empower them with sustainable farming techniques.</p>
+                <button class="btn" id = "get-tips-btn" onclick="window.location.href='#create-post';">Create Post</button>
             </div>
             <div class="card">
                 <i class="fa fa-comments"></i>
@@ -167,6 +177,10 @@
         </div> <!-- This is where the posts will be displayed -->
 
       </section>
+      <div class="back-button">
+        <button onclick="goBack()" aria-label="Go Back">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
     </div>
     <script src="../js/scripts.js"></script>
 </body>

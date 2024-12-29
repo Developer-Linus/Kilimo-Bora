@@ -696,6 +696,10 @@ document.addEventListener("DOMContentLoaded", () => {
         navLinks.classList.toggle("active");
     });
 });
+function goBack() {
+    window.history.back();
+}
+
 
 
 

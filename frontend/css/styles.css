@@ -766,6 +766,32 @@ body.register-main{
     color: #008caf; /* Same color as the button */
 }
 
+.back-button {
+    margin-top: 2rem;
+    margin-left: 2rem;
+    z-index: 2000;
+}
+.back-button button {
+    background-color: #008caf;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button button:hover {
+    background-color: #005f7a;
+}
+
+.back-button i {
+    margin-right: 5px;
+    font-size: 1.2rem;
+}
+
+
 
 /* Media Queries for Responsiveness */
 @media (max-width: 1200px){
@@ -871,6 +897,11 @@ body.register-main{
     .cards {
         display: grid;
         grid-template-columns: 1fr;
+    }
+    .back-button {
+        margin-top: 2rem;
+        margin-left: 0.2rem;
+        z-index: 2000;
     }
 }
 
