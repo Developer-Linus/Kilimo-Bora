@@ -26,7 +26,7 @@
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="./public/login.html">Logout</a></li>
+                <li><a href="" id = "logout-nav">Logout</a></li>
             </ul>
         </nav>
     </header> 
@@ -79,38 +79,38 @@
                 <i class="fa fa-pen"></i>
                 <h3>Post</h3>
                 <p>Share tips with your fellow farmers to empower them with sustainable farming techniques.</p>
-                <button class="btn" id = "get-tips-btn" onclick="window.location.href='#create-post';">Create Post</button>
+                <button class="btn" id = "create-tips-btn" onclick="window.location.href='#create-post';">Create Post</button>
             </div>
             <div class="card">
                 <i class="fa fa-comments"></i>
                 <h3>Professional Advice</h3>
                 <p>Connect with certified farming professionals for one-on-one tips.</p>
-                <button class="btn" onclick="window.location.href='#settings';">Get In Touch</button>
+                <button class="btn" id = "professional-btn" onclick="window.location.href='#coming-soon-section';">Get In Touch</button>
             </div>
             <div class="card">
                 <i class="fa fa-briefcase"></i>
                 <h3>MarketPlace</h3>
                 <p>Connect with Buyers.</p>
-                <button class="btn" onclick="window.location.href='#messages';">Find Buyers</button>
+                <button class="btn" id = "marketplace-btn" onclick="window.location.href='#coming-soon-sectionages';">Find Buyers</button>
             </div>
             <div class="card">
                 <i class="fa fa-cogs"></i>
                 <h3>Inventory</h3>
                 <p>Keep Record of all your farming tools and equipment and resources.</p>
-                <button class="btn" onclick="window.location.href='#settings';">Take Your Inventory</button>
+                <button class="btn" id = "inventory-btn" onclick="window.location.href='#coming-soon-section';">Take Your Inventory</button>
             </div>
             <div class="card">
                 <i class="fa fa-robot"></i>
                 <h3>AI Assistant</h3>
                 <p>Utilize AI technology to make your informed farming decisions.</p>
-                <button class="btn" onclick="window.location.href='#settings';">Chat</button>
+                <button class="btn" id = "assistant-btn" onclick="window.location.href='#coming-soon-section';">Chat</button>
             </div>
             <div class="card">
                 <i class="fa fa-star"></i>
-                <h3>Favourite Tips</h3>
+                <h3>Favorite Tips</h3>
                 <p>Counter</p>
                 <p>Keep tips you love and download them later.</p>
-                <button class="btn" onclick="window.location.href='#settings';">Download</button>
+                <button class="btn" id = "favorite-btn" onclick="window.location.href='#coming-soon-sections';">Download</button>
             </div>
         </div>
         <!--Profile Section-->
@@ -169,11 +169,42 @@
         <!-- Logout Button -->
         <button type="button" id="logoutBtn" class="btn-secondary" aria-label="Logout from your profile">Logout</button>
     </div>
-
-    <!--Tips Section-->
+             <!--Tips Section-->
+             <section id="tips-section" style = "display: none;">
+                <div id="posts-container">
+                    <h1>Posts</h1>
+                </div> <!-- This is where the posts will be displayed -->
+        
+              </section>
+                       <!--Tips Section-->
     <section id="tips-section" style = "display: none;">
         <div id="posts-container">
             <h1>Posts</h1>
+        </div> <!-- This is where the posts will be displayed -->
+
+      </section>
+
+      <div class="container" style = "display: none;" id = "create-post">
+        <h1>Create a New Tip</h1>
+        <form id="createTipForm">
+            <div class="form-group">
+                <label for="title">Tip Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter the title of your tip" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Tip Content</label>
+                <textarea id="content" name="content" placeholder="Enter detailed tip content" required></textarea>
+            </div>
+            <button type="submit" class="btn">
+                <i class="fas fa-paper-plane"></i> Submit Tip
+            </button>
+        </form>
+        <div id="responseMessage" style="margin-top: 20px; color: #333; text-align: center;"></div>
+    </div>
+
+      <section id="coming-soon-section" style = "display: none;">
+        <div id="coming-soon-container">
+            <h1>Coming Soon...............</h1>
         </div> <!-- This is where the posts will be displayed -->
 
       </section>
@@ -182,6 +213,7 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     </div>
+    <script src="../js/auth-utils.js"></script>
     <script src="../js/scripts.js"></script>
 </body>
 </html>

@@ -122,6 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const dashboardCards = document.getElementById('dashboard-cards');
     const tipsContainer = document.getElementById("tips-section");
     const getTipsBtn = document.getElementById("get-tips-btn");
+    const professionalBtn = document.getElementById("professional-btn");
+    const marketplaceBtn = document.getElementById("marketplace-btn");
+    const inventoryBtn = document.getElementById("inventory-btn");
+    const assistantBtn = document.getElementById("assistant-btn");
+    const favoriteBtn = document.getElementById("favorite-btn");
+
 
 
 
@@ -397,6 +403,12 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
     window.location.href = '../public/login.html'; // Redirect to login page
 });
 
+// Logout function
+document.getElementById('logout-nav')?.addEventListener('click', () => {
+    localStorage.removeItem('jwtToken'); // Remove JWT token from localStorage
+    window.location.href = '../public/login.html'; // Redirect to login page
+});
+
 
 // WORKING ON IT
 let currentPage = 1; // Tracks the current page of posts for infinite scrolling.
@@ -498,6 +510,49 @@ if (getTipsBtn) {
 } else {
     console.error('Get Tips button not found');
 }
+
+document.getElementById('createTipForm')?.addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    // Collect form data
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+
+    if (!title || !content) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    // Send POST request to the backend
+    try {
+        const response = await fetch('/auth/POST/createTip', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}` // Include the auth token
+            },
+            body: JSON.stringify({ title, content })
+        });
+
+        const result = await response.json();
+
+        // Handle the response
+        const responseMessage = document.getElementById('responseMessage');
+        if (response.ok) {
+            document.getElementById('create-post').style.display = 'block';
+            document.getElementById('dashboard-cards').style.display = 'none';
+            responseMessage.style.color = 'green';
+            responseMessage.textContent = 'Tip submitted successfully!';
+            document.getElementById('createTipForm').reset();
+        } else {
+            responseMessage.style.color = 'red';
+            responseMessage.textContent = result.message || 'Failed to submit the tip.';
+        }
+    } catch (error) {
+        console.error('Error submitting tip:', error);
+        alert('An error occurred while submitting the tip. Please try again.');
+    }
+});
 
 
 

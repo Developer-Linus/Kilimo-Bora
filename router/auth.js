@@ -47,7 +47,8 @@ router.post('/posts/:tipId/like', authController.toggleLike);
 
 // Route for updating profile
 router.post('/POST/updateProfile',authController.upload, authController.updateProfile);
-
+// Route for creating a new tip
+router.post('/POST/createTip', authController.createTip);
 
 
 module.exports = router;

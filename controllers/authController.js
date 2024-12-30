@@ -229,6 +229,41 @@ exports.getTips = async (req, res) => {
     }
 }
 
+// Create a new tip
+exports.createTip = async (req, res) => {
+    try {
+        // Retrieve the logged-in user's ID from the request (assuming it's stored in the auth token)
+        const userId = req.user.user_id; // Ensure `req.user` is populated by middleware
+        const { title, content } = req.body;
+
+        // Validate inputs
+        if (!title || !content) {
+            return res.status(400).json({ message: 'Title and content are required.' });
+        }
+
+        // Insert the new tip into the tips table
+        const [result] = await db.execute(
+            `INSERT INTO tips (title, content, user_id) VALUES (?, ?, ?)`,
+            [title, content, userId]
+        );
+
+        // Respond with success
+        res.status(201).json({
+            message: 'Tip created successfully.',
+            tip: {
+                tip_id: result.insertId,
+                title,
+                content,
+                user_id: userId,
+            },
+        });
+    } catch (error) {
+        console.error('Error creating tip:', error);
+        res.status(500).json({ message: 'Server error while creating tip.' });
+    }
+};
+
+
 // Retrieve comments for specific tip
 exports.getComments = async (req, res) =>{
 
