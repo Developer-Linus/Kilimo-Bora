@@ -24,8 +24,6 @@
             </div>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Services</a></li>
                 <li><a href="" id = "logout-nav">Logout</a></li>
             </ul>
         </nav>
@@ -37,14 +35,15 @@
         </div>
         <nav class = "sidebar-nav">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#profile">Profile</a></li>
-                <li><a href="#settings">Tips</a></li>
-                <li><a href="#logout">Professional Advice</a></li>
-                <li><a href="MarketPlace">MarketPlace</a></li>
-                <li><a href="#settings">Inventory</a></li>
-                <li><a href="#settings">AI Assistant</a></li>
-                <li><a href="#settings">Favourite Tips</a></li>
+                <li><a href="./dashboard.html">Home</a></li>
+                <li><a href="#" id = "profile-sidebar">Profile</a></li>
+                <li><a href="#" id = "tips-sidebar">Tips</a></li>
+                <li><a href="#" id = "create-post-sidebar">Create Post</a></li>
+                <li><a href="#" id = "professional-sidebar">Professional Advice</a></li>
+                <li><a href="#" id = "marketplace-sidebar">MarketPlace</a></li>
+                <li><a href="#" id = "inventory-sidebar">Inventory</a></li>
+                <li><a href="#" id = "assistant-sidebar">AI Assistant</a></li>
+                <li><a href="#" id = "favorite-sidebar">Favourite Tips</a></li>
             </ul>
         </nav>
     </div>
@@ -58,7 +57,7 @@
         </div>
         <!-- Welcome message -->
         <div class="welcome-message">
-            <h1>Welcome, <span id = "user-name"></span>!</h1>
+            <h1>Welcome, <span id = "logged-user-name"></span>!</h1>
             <p>Welcome back to your dashboard. Here's what you can do on the platform.</p>
         </div>
         <!-- Dashboard Cards -->
@@ -67,7 +66,7 @@
                 <i class="fa fa-user"></i>
                 <h3>Profile</h3>
                 <p>View and edit your profile information</p>
-                <button class="btn" id="profile-btn" onclick="window.location.href='#profile-section'">Go to Profile</button>
+                <button class="btn" id = "profile-btn" onclick="window.location.href='#profile-section'">Go to Profile</button>
             </div>
             <div class="card">
                 <i class="fa fa-lightbulb"></i>
@@ -184,7 +183,7 @@
 
       </section>
 
-      <div class="container" style = "display: none;" id = "create-post">
+      <div class = "form-section" id = "create-post" style = "display: none;">
         <h1>Create a New Tip</h1>
         <form id="createTipForm">
             <div class="form-group">
@@ -213,7 +212,7 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     </div>
-    <script src="../js/auth-utils.js"></script>
     <script src="../js/scripts.js"></script>
+    <script src="../js/auth-utils.js"></script>
 </body>
 </html>

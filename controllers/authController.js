@@ -232,16 +232,21 @@ exports.getTips = async (req, res) => {
 // Create a new tip
 exports.createTip = async (req, res) => {
     try {
-        // Retrieve the logged-in user's ID from the request (assuming it's stored in the auth token)
-        const userId = req.user.user_id; // Ensure `req.user` is populated by middleware
+        // Ensure req.user is populated
+        const userId = req.user?.userId; // Match the payload structure in the login function
+        if (!userId) {
+            return res.status(401).json({ message: 'Unauthorized. User not authenticated.' });
+        }
+
+        // Extract title and content from the request body
         const { title, content } = req.body;
 
-        // Validate inputs
+        // Validate input fields
         if (!title || !content) {
             return res.status(400).json({ message: 'Title and content are required.' });
         }
 
-        // Insert the new tip into the tips table
+        // Insert the new tip into the database
         const [result] = await db.execute(
             `INSERT INTO tips (title, content, user_id) VALUES (?, ?, ?)`,
             [title, content, userId]
@@ -262,6 +267,8 @@ exports.createTip = async (req, res) => {
         res.status(500).json({ message: 'Server error while creating tip.' });
     }
 };
+
+
 
 
 // Retrieve comments for specific tip

@@ -682,7 +682,6 @@ body.register-main{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Consistent box-shadow */
     border-radius: 10px; /* Rounded corners consistent with tip cards */
     box-sizing: border-box; /* Ensures padding and border are included in width */
-    margin-left: 300px;
 }
 
 /* Post Card */
@@ -772,8 +771,8 @@ body.register-main{
     z-index: 2000;
 }
 .back-button button {
-    background-color: #008caf;
-    color: #fff;
+    background-color: rgba(218, 196, 172, 0.75);
+    color: #4F1E0F;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -783,14 +782,19 @@ body.register-main{
 }
 
 .back-button button:hover {
-    background-color: #005f7a;
+    background-color: #4F1E0F;
+    color: #fff;
 }
 
 .back-button i {
     margin-right: 5px;
     font-size: 1.2rem;
 }
-
+#coming-soon-section{
+    font-size: 4rem;
+    text-align: center;
+    color: #fff;
+}
 
 
 /* Media Queries for Responsiveness */
@@ -818,6 +822,9 @@ body.register-main{
     .profile-container{
         margin-left: 0;
         width: 100%;
+    }
+    #dashboard-cards{
+        grid-template-columns: 2fr;
     }
 }
 

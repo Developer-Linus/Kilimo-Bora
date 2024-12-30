@@ -4,6 +4,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 const authenticateJWT = require('../JWTMiddleware/authenticateJWT');
 const { body } = require('express-validator');
+const authenticateToken = require('../frontend/js/authenticateToken');
 
 // route for user registration
 router.post('/POST/register',
@@ -47,8 +48,9 @@ router.post('/posts/:tipId/like', authController.toggleLike);
 
 // Route for updating profile
 router.post('/POST/updateProfile',authController.upload, authController.updateProfile);
+
 // Route for creating a new tip
-router.post('/POST/createTip', authController.createTip);
+router.post('/POST/createTip', authenticateToken, authController.createTip);
 
 
 module.exports = router;

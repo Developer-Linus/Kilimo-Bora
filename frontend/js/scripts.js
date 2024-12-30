@@ -121,12 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileSection = document.getElementById('profile-section');
     const dashboardCards = document.getElementById('dashboard-cards');
     const tipsContainer = document.getElementById("tips-section");
+    const tipsSide = document.getElementById("tips-sidebar");
     const getTipsBtn = document.getElementById("get-tips-btn");
     const professionalBtn = document.getElementById("professional-btn");
     const marketplaceBtn = document.getElementById("marketplace-btn");
     const inventoryBtn = document.getElementById("inventory-btn");
     const assistantBtn = document.getElementById("assistant-btn");
     const favoriteBtn = document.getElementById("favorite-btn");
+    const profileSide = document.getElementById("profile-sidebar");
+    const createPostSide = document.getElementById("create-post-sidebar");
+    const professionalSide = document.getElementById("professional-sidebar");
+    const marketplaceSide = document.getElementById("marketplace-sidebar");
+    const inventorySide = document.getElementById("inventory-sidebar");
+    const assistantSide = document.getElementById("assistant-sidebar");
+    const favoriteSide = document.getElementById("favorite-sidebar");
+
 
 
 
@@ -240,21 +249,6 @@ loginForm?.addEventListener('submit', async (event) => {
         showMessage('error', 'An unexpected error occurred. Please try again later.');
     }
 });
-
-// Fetch the user details from localStorage
-const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-
-// Check if userDetails exists and contains the firstName property
-if (userDetails && userDetails.firstName) {
-    // Get the span element by its ID
-    const userNameElement = document.getElementById('user-name');
-    
-    // Set the inner text of the span to the logged-in user's first name
-    userNameElement.textContent = userDetails.firstName;
-} else {
-    console.log('User details not found or firstName not available.');
-}
-
 // View user profile
 profileBtn?.addEventListener('click', async (event) => {
     event.preventDefault(); // Prevent the default behavior (navigating) for debugging
@@ -403,6 +397,50 @@ document.getElementById('logoutBtn')?.addEventListener('click', () => {
     window.location.href = '../public/login.html'; // Redirect to login page
 });
 
+// Toggling dashboard Sidebar navigation
+profileSide?.addEventListener('click', async (event) => {
+    await getUser();
+});
+tipsSide?.addEventListener('click', async (event) => {
+    // Hide the dashboard
+    if (dashboardCards) dashboardCards.style.display = 'none';
+        
+    // Show the tips container
+    if (tipsContainer) tipsContainer.style.display = 'block';
+    
+    // Fetch and display tips after the page switch
+    fetchPosts(1); // Optionally, fetch posts for the first page or the desired page
+});
+createPostSide?.addEventListener('click', async (event) => {
+    document.getElementById('create-post').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+professionalSide?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+marketplaceSide?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+inventorySide?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+assistantSide?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+favoriteSide?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+
+
+
+
+
+
 // Logout function
 document.getElementById('logout-nav')?.addEventListener('click', () => {
     localStorage.removeItem('jwtToken'); // Remove JWT token from localStorage
@@ -410,106 +448,110 @@ document.getElementById('logout-nav')?.addEventListener('click', () => {
 });
 
 
-// WORKING ON IT
-let currentPage = 1; // Tracks the current page of posts for infinite scrolling.
-let isLoading = false; // Prevents multiple simultaneous fetch requests.
-
-async function fetchPosts(page = 1) {
-    try {
-        if (isLoading) return; // Prevent overlapping requests.
-        isLoading = true; // Indicate that a fetch request is ongoing.
-
-        // Fetch posts for the given page from the backend.
-        const response = await fetch(`/auth/GET/tips?page=${page}`);
-        const posts = await response.json();
-
-        // Log the response to check its structure
-        console.log('Fetched posts:', posts);
-
-        // Ensure the response contains the 'tips' array
-        if (Array.isArray(posts.tips)) {
-            renderPosts(posts.tips); // Display the fetched posts.
-        } else {
-            console.error('Expected an array but received:', posts.tips);
+// Fetch tips from the backend
+    let currentPage = 1; // Tracks the current page of posts for infinite scrolling.
+    let isLoading = false; // Prevents multiple simultaneous fetch requests.
+    
+    async function fetchPosts(page = 1) {
+        try {
+            if (isLoading) return; // Prevent overlapping requests.
+            isLoading = true; // Indicate that a fetch request is ongoing.
+    
+            // Fetch posts for the given page from the backend.
+            const response = await fetch(`/auth/GET/tips?page=${page}`);
+            const posts = await response.json();
+    
+            // Log the response to check its structure
+            console.log('Fetched posts:', posts);
+    
+            // Ensure the response contains the 'tips' array
+            if (Array.isArray(posts.tips)) {
+                renderPosts(posts.tips); // Display the fetched posts.
+            } else {
+                console.error('Expected an array but received:', posts.tips);
+            }
+            isLoading = false; // Allow new requests after rendering posts.
+        } catch (error) {
+            console.error('Error fetching posts:', error); // Log fetch errors.
+            isLoading = false; // Reset loading status after error.
         }
-        isLoading = false; // Allow new requests after rendering posts.
-    } catch (error) {
-        console.error('Error fetching posts:', error); // Log fetch errors.
-        isLoading = false; // Reset loading status after error.
     }
-}
-
-function renderPosts(posts) {
-    const postsContainer = document.getElementById('posts-container');
-
-    posts.forEach(post => {
-        const postCard = document.createElement('div');
-        postCard.className = 'post-card';
-
-        // Add the post content, including comments section with textarea and button inside
-        postCard.innerHTML = `
-            <h3>${post.title}</h3>
-            <p>${post.content}</p>
-            <p><strong>Author:</strong> ${post.author}</p>
-            <p>
-                <strong>Comments:</strong>
-                <span id="comment-count-${post.tip_id}">${post.comments}</span>
-                <button onclick="toggleComments(${post.tip_id})">View Comments</button>
-            </p>
-            <div id="comments-${post.tip_id}" class="comments-section" style="display: none;">
-                <ul id="comments-list-${post.tip_id}"></ul>
-                <textarea id="new-comment-${post.tip_id}" placeholder="Write a comment..." rows="2" class="comment-input"></textarea>
-                <button onclick="addComment(${post.tip_id})" class="add-comment-btn">Add Comment</button>
-            </div>
-            <p>
-                <strong>Likes:</strong>
-                <span id="like-count-${post.tip_id}">${post.likes}</span>
-                <button onclick="likePost(${post.tip_id})">Like</button>
-            </p>
-        `;
-
-        postsContainer.appendChild(postCard);
-    });
-}
-
-
-
-
-// Initial post fetch when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    fetchPosts(currentPage);
-});
-
-
-// Infinite Scrolling functionality
-window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-        currentPage++; // Move to the next page.
-        fetchPosts(currentPage); // Load the next set of posts.
+    
+    function renderPosts(posts) {
+        const postsContainer = document.getElementById('posts-container');
+    
+        posts.forEach(post => {
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+    
+            // Add the post content, including comments section with textarea and button inside
+            postCard.innerHTML = `
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+                <p><strong>Author:</strong> ${post.author}</p>
+                <p>
+                    <strong>Comments:</strong>
+                    <span id="comment-count-${post.tip_id}">${post.comments}</span>
+                    <button onclick="toggleComments(${post.tip_id})">View Comments</button>
+                </p>
+                <div id="comments-${post.tip_id}" class="comments-section" style="display: none;">
+                    <ul id="comments-list-${post.tip_id}"></ul>
+                    <textarea id="new-comment-${post.tip_id}" placeholder="Write a comment..." rows="2" class="comment-input"></textarea>
+                    <button onclick="addComment(${post.tip_id})" class="add-comment-btn">Add Comment</button>
+                </div>
+                <p>
+                    <strong>Likes:</strong>
+                    <span id="like-count-${post.tip_id}">${post.likes}</span>
+                    <button onclick="likePost(${post.tip_id})">Like</button>
+                </p>
+            `;
+    
+            postsContainer.appendChild(postCard);
+        });
     }
-});
-
-// Initial Load
-document.addEventListener('DOMContentLoaded', () => {
-    fetchPosts(currentPage); // Fetch posts when the page loads.
-});
-
-// Event listener for the "Get Tips" button
-if (getTipsBtn) {
-    getTipsBtn.addEventListener('click', function () {
-      
-        // Hide the dashboard
-        if (dashboardCards) dashboardCards.style.display = 'none';
-        
-        // Show the tips container
-        if (tipsContainer) tipsContainer.style.display = 'block';
-        
-        // Fetch and display tips after the page switch
-        fetchPosts(1); // Optionally, fetch posts for the first page or the desired page
+    // Initial post fetch when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchPosts(currentPage);
     });
-} else {
-    console.error('Get Tips button not found');
-}
+    
+    
+    // Infinite Scrolling functionality
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            currentPage++; // Move to the next page.
+            fetchPosts(currentPage); // Load the next set of posts.
+        }
+    });
+    
+    // Initial Load
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchPosts(currentPage); // Fetch posts when the page loads.
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        
+    });
+    // Event listener for the "Get Tips" button
+    if (getTipsBtn) {
+        getTipsBtn.addEventListener('click', function () {
+          
+            // Hide the dashboard
+            if (dashboardCards) dashboardCards.style.display = 'none';
+            
+            // Show the tips container
+            if (tipsContainer) tipsContainer.style.display = 'block';
+            
+            // Fetch and display tips after the page switch
+            fetchPosts(1); // Optionally, fetch posts for the first page or the desired page
+        });
+    } else {
+        console.error('Get Tips button not found');
+    }
+
+
+// Creating tips 
+const createTipsBtn = document.getElementById('create-tips-btn');
+
+// Create Tip function
 
 document.getElementById('createTipForm')?.addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -518,41 +560,83 @@ document.getElementById('createTipForm')?.addEventListener('submit', async funct
     const title = document.getElementById('title').value.trim();
     const content = document.getElementById('content').value.trim();
 
+    // Validate form data
     if (!title || !content) {
         alert('Please fill in all fields.');
         return;
     }
 
-    // Send POST request to the backend
+    // Prepare the POST request data
+    const tipData = { title, content };
+
     try {
-        const response = await fetch('/auth/POST/createTip', {
+        // Send POST request to the backend
+        const response = await fetch('/auth/POST/createTip', { // Corrected URL to match the backend route
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('jwtToken')}` // Include the auth token
             },
-            body: JSON.stringify({ title, content })
+            body: JSON.stringify(tipData)
         });
 
-        const result = await response.json();
-
         // Handle the response
+        const result = await response.json();
         const responseMessage = document.getElementById('responseMessage');
+
         if (response.ok) {
+            // Success: Display success message and reset form
             document.getElementById('create-post').style.display = 'block';
             document.getElementById('dashboard-cards').style.display = 'none';
             responseMessage.style.color = 'green';
             responseMessage.textContent = 'Tip submitted successfully!';
             document.getElementById('createTipForm').reset();
         } else {
-            responseMessage.style.color = 'red';
-            responseMessage.textContent = result.message || 'Failed to submit the tip.';
+            // Failure: Handle errors such as Unauthorized or other responses
+            if (response.status === 401) {
+                responseMessage.style.color = 'red';
+                responseMessage.textContent = 'Unauthorized. Please log in again.';
+                window.location.href = './login.html'; // Redirect to login if not authenticated
+            } else {
+                responseMessage.style.color = 'red';
+                responseMessage.textContent = result.message || 'Failed to submit the tip.';
+            }
         }
     } catch (error) {
         console.error('Error submitting tip:', error);
         alert('An error occurred while submitting the tip. Please try again.');
     }
 });
+
+// Show the "create-post" section when the createTipsBtn is clicked
+createTipsBtn.addEventListener('click', () => {
+    document.getElementById('create-post').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+
+professionalBtn?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+
+marketplaceBtn?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+
+inventoryBtn?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+
+assistantBtn?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+});
+favoriteBtn?.addEventListener('click', async (event) => {
+    document.getElementById('coming-soon-section').style.display = 'block';
+    document.getElementById('dashboard-cards').style.display = 'none';
+})
 
 
 
@@ -569,9 +653,6 @@ document.getElementById('createTipForm')?.addEventListener('submit', async funct
 
 
 })
-
-
-
 
 
 // Global function to toggle comments for a post
@@ -751,10 +832,22 @@ document.addEventListener("DOMContentLoaded", () => {
         navLinks.classList.toggle("active");
     });
 });
+
 function goBack() {
     window.history.back();
 }
 
+    // Fetch the user details from localStorage
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+
+    // Check if userDetails exists and contains the firstName property
+    if (userDetails && userDetails.firstName) {
+        const userNameElement = document.getElementById('logged-user-name');
+        // Set the inner text of the span to the logged-in user's first name
+        userNameElement.textContent = userDetails.firstName;
+    } else {
+        console.log('User details not found or firstName not available.');
+    }
 
 
 
