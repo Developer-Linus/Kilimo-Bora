@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_31fae177-8287-4a1c-8df7-4658aa8aaf0a",
+      "org_id": "user_8b6ace4f-2b85-413a-bc34-f03afa89097b",
+      "deploy_url": "https://github.com/Developer-Linus/Kilimo-Bora.git",
+      "git_ssh_url": "https://github.com/Developer-Linus/Kilimo-Bora.git",
+      "name": "Kilimo-Bora",
+      "alias": "Kilimo-Bora"
+    }
+  ]
+}
