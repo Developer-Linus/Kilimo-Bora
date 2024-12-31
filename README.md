@@ -4,11 +4,44 @@
 
 ---
 
+# Project Progress Update
+
+The project is now live: [Kilimo Bora](https://kilimo-bora-1.onrender.com/).
+
+## Implemented Features
+- **User Registration**: Users can create an account.
+- **User Login**: Secure authentication for users.
+- **Profile Management**: Users can edit and update their profiles.
+- **Farming Tips**: View and interact with farming tips.
+  - **Commenting and Liking**: Engage with favorite tips.
+  - **Post Farming Methods**: Share proven techniques.
+
+## Upcoming Features
+- **Professional Farming Advice**: Access expert recommendations.
+- **Marketplace**: Buy and sell farm produce.
+- **Farm Inventory**: Record and manage farm assets.
+- **AI Farming Assistant**: Smart insights for optimized farming.
+- **Bookmarking**: Save and download favorite tips.
+
+We welcome your feedback to guide the implementation of the remaining features. 
+
+---
+
 ## Prerequisites
 Ensure the following are installed on your system:
 - **npm**
 - **Node.js**
 - **MySQL Server**
+
+---
+
+## Technologies Used
+ - HTML.
+ - CSS.
+ - JavaScript.
+ - SQL.
+ - Node.js.
+ - Express.
 
 ---
 
