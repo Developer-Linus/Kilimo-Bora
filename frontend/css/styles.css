@@ -852,7 +852,7 @@ body.register-main{
         width: 90%;
     }
     .form-section{
-        width: 80%;
+        width: 60%;
     }
     #services li, #features li{
         flex: 1 1 50%;
@@ -919,7 +919,7 @@ body.register-main{
         z-index: 2000;
     }
     .wrapper{
-        padding: 1rem;
+        padding: 0.2rem;
     }
     #mission, #about, #get-started, #contact{
         width: 85%;
