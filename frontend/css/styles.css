@@ -918,9 +918,6 @@ body.register-main{
         margin-left: 0.2rem;
         z-index: 2000;
     }
-    .wrapper{
-        padding: 0.2rem;
-    }
     #mission, #about, #get-started, #contact{
         width: 85%;
         margin: 2rem auto;
