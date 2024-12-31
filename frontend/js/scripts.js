@@ -888,10 +888,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const hamburgerMenu = document.querySelector(".hamburger-menu");
     const navLinks = document.querySelector(".nav-links");
 
-    hamburgerMenu.addEventListener("click", () => {
+    // Toggle menu when the hamburger icon is clicked
+    hamburgerMenu.addEventListener("click", (event) => {
         navLinks.classList.toggle("active");
+        event.stopPropagation(); // Prevent click from propagating to the document
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", () => {
+        if (navLinks.classList.contains("active")) {
+            navLinks.classList.remove("active");
+        }
+    });
+
+    // Prevent menu close when clicking inside the nav-links
+    navLinks.addEventListener("click", (event) => {
+        event.stopPropagation();
     });
 });
+
 
 function goBack() {
     window.history.back();
