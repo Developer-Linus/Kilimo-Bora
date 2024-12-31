@@ -918,10 +918,6 @@ body.register-main{
         margin-left: 0.2rem;
         z-index: 2000;
     }
-    #home-content{
-        width: 90%;
-        margin: 2rem auto;
-    }
     #mission, #about, #get-started, #contact{
         width: 85%;
         margin: 2rem auto;
