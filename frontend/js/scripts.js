@@ -1,7 +1,7 @@
 // Section for registration and login frontend form validation
 
-
-// Registration form validation
+document.addEventListener('DOMContentLoaded', async()=>{
+    // Registration form validation
 function validateRegisterForm(event) {
     let isValid = true;
 
@@ -165,6 +165,7 @@ document.getElementById("loginPassword").addEventListener("input", () => {
     } else {
         loginPasswordError.textContent = "";
     }
+});
 });
 
 
