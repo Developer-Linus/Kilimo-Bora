@@ -52,6 +52,9 @@ function validateRegisterForm(event) {
     if (password.value.trim() === "") {
         passwordError.textContent = "Password is required.";
         isValid = false;
+    } else if (password.value.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+        isValid = false;
     } else if (password.value !== confirmPassword.value) {
         confirmPasswordError.textContent = "Passwords do not match.";
         isValid = false;
@@ -71,6 +74,28 @@ function validateRegisterForm(event) {
     return isValid; // Return the validation result
 }
 
+// Real-time validation
+document.getElementById('regPassword').addEventListener('input', () => {
+    const password = document.getElementById('regPassword');
+    const passwordError = document.getElementById('passwordError');
+    if (password.value.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+    } else {
+        passwordError.textContent = "";
+    }
+});
+
+document.getElementById('regConfirmPassword').addEventListener('input', () => {
+    const password = document.getElementById('regPassword');
+    const confirmPassword = document.getElementById('regConfirmPassword');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    if (password.value !== confirmPassword.value) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+    } else {
+        confirmPasswordError.textContent = "";
+    }
+});
+
 // Login validation form
 function validateLoginForm() {
     let valid = true;
@@ -78,36 +103,70 @@ function validateLoginForm() {
     // Email regex pattern
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Clearing previous error messages
-    document.getElementById("loginEmailError").textContent = "";
-    document.getElementById("loginPasswordError").textContent = "";
+    // Cache DOM elements
+    const emailLogin = document.getElementById("loginEmail");
+    const emailLoginError = document.getElementById("loginEmailError");
+
+    const passwordField = document.getElementById("loginPassword");
+    const loginPasswordError = document.getElementById("loginPasswordError");
+
+    // Clear previous error messages
+    emailLoginError.textContent = "";
+    loginPasswordError.textContent = "";
 
     // Email validation
-    const emailLogin = document.getElementById("loginEmail").value.trim();
-    if (emailLogin === "") {
-        document.getElementById("loginEmailError").textContent = 
-            "Error! Please input your email address.";
+    if (emailLogin.value.trim() === "") {
+        emailLoginError.textContent = "Error! Please input your email address.";
         valid = false;
-    } else if (!emailPattern.test(emailLogin)) {
-        document.getElementById("loginEmailError").textContent = 
-            "Error! Please enter a valid email address.";
+    } else if (!emailPattern.test(emailLogin.value.trim())) {
+        emailLoginError.textContent = "Error! Please enter a valid email address.";
         valid = false;
+    } else {
+        emailLoginError.textContent = "";
     }
 
     // Password validation
-    const passwordField = document.getElementById("loginPassword").value.trim();
-    if (passwordField === "") {
-        document.getElementById("loginPasswordError").textContent = 
-            "Error! Please enter your password.";
+    if (passwordField.value.trim() === "") {
+        loginPasswordError.textContent = "Error! Please enter your password.";
         valid = false;
-    } else if (passwordField.length < 8) {
-        document.getElementById("loginPasswordError").textContent = 
-            "Error! Your password must be at least 8 characters long.";
+    } else if (passwordField.value.trim().length < 8) {
+        loginPasswordError.textContent = "Error! Your password must be at least 8 characters long.";
         valid = false;
+    } else {
+        loginPasswordError.textContent = "";
     }
 
     return valid;
 }
+
+// Real-time validation for login form
+document.getElementById("loginEmail").addEventListener("input", () => {
+    const emailLogin = document.getElementById("loginEmail");
+    const emailLoginError = document.getElementById("loginEmailError");
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (emailLogin.value.trim() === "") {
+        emailLoginError.textContent = "Error! Please input your email address.";
+    } else if (!emailPattern.test(emailLogin.value.trim())) {
+        emailLoginError.textContent = "Error! Please enter a valid email address.";
+    } else {
+        emailLoginError.textContent = "";
+    }
+});
+
+document.getElementById("loginPassword").addEventListener("input", () => {
+    const passwordField = document.getElementById("loginPassword");
+    const loginPasswordError = document.getElementById("loginPasswordError");
+
+    if (passwordField.value.trim() === "") {
+        loginPasswordError.textContent = "Error! Please enter your password.";
+    } else if (passwordField.value.trim().length < 8) {
+        loginPasswordError.textContent = "Error! Your password must be at least 8 characters long.";
+    } else {
+        loginPasswordError.textContent = "";
+    }
+});
+
 
 
 // Section for frontend and backend connection

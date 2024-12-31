@@ -418,6 +418,7 @@ body.register-main{
     border: 1px solid #45a049;
     border-radius: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin-bottom: 0.6rem;
 }
 
 #contact h2 {
@@ -801,7 +802,7 @@ body.register-main{
 @media (max-width: 1200px){
     #home{
         margin-top: 2.7rem;
-        margin-bottom: 1.6rem;
+        margin-bottom: 6rem;
     }
     .hero-content>h2 {
         font-size: 2.9em;
@@ -826,6 +827,9 @@ body.register-main{
     #dashboard-cards{
         grid-template-columns: 2fr;
     }
+    .home-container{
+        margin: 3rem auto;
+    }
 }
 
 @media (max-width: 600px) {
@@ -833,7 +837,8 @@ body.register-main{
         display: none;
     }
     #home{
-        margin-top: 0.5rem;
+        margin-top: 2.5rem;
+        margin-bottom: 6rem;
     }
     .hero-content>h2 {
         font-size: 3em;
@@ -845,6 +850,9 @@ body.register-main{
     .main-content{
         margin-left: 0;
         width: 90%;
+    }
+    .form-section{
+        width: 80%;
     }
     #services li, #features li{
         flex: 1 1 50%;
@@ -909,6 +917,10 @@ body.register-main{
         margin-top: 2rem;
         margin-left: 0.2rem;
         z-index: 2000;
+    }
+    #mission, #about, #get-started, #contact, #features, #services{
+        width: 90%;
+        margin: 2rem auto;
     }
 }
 
